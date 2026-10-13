@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src https://vet-helpline-development.dkjmmz6whh.workers.dev; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-src 'none'">
-<title>Paws & Whiskers Visit | Bay Area Apps</title>
+<title>Paws & Whiskers Home Visits</title>
 <meta name="description" content="Request an at-home pet-care visit. Follow your appointment on a private page, then pay with PayPal or Apple Pay after we confirm.">
 <link rel="canonical" href="https://bayareaapps.com/petassist-local/">
-<meta property="og:title" content="Paws & Whiskers Visit">
+<meta property="og:title" content="Paws & Whiskers Home Visits">
 <meta property="og:description" content="Request pet care at home, follow the visit, and pay securely after confirmation.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bayareaapps.com/petassist-local/">
@@ -21,13 +21,13 @@
 <div class="map-stage" aria-hidden="true"></div>
 <header class="ride-top">
 <nav class="nav" aria-label="Main navigation">
-<span>Paws & Whiskers Visit<small>BAY AREA APPS</small></span>
+<span>Paws & Whiskers Home Visits</span>
 <button type="button" class="menu" aria-expanded="false" aria-controls="main-links">Menu</button>
 <div class="links" id="main-links">
-<a href="/">Bay Area Apps</a>
+<a href="/petassist-local/">Home Visits</a>
 <a href="/paws-whiskers/">Help Line</a>
-<a href="/privacy/">Privacy</a>
-<a href="mailto:info@bayareaapps.com">Email</a>
+<a href="/petassist-local/privacy/">Privacy</a>
+<a href="/petassist-local/privacy/#contact">Contact</a>
 </div>
 </nav>
 </header>
@@ -71,7 +71,7 @@
 </div>
 <div class="step" data-step="details" hidden>
 <h2 id="details-title" tabindex="-1">Confirm your visit</h2>
-<p class="lede">We confirm the time before any charge. Payment is PayPal or Apple Pay, the same checkout as the Help Line.</p>
+<p class="lede">We confirm the time before any charge. Pay securely through PayPal, with Apple Pay where available.</p>
 <label>Your name<input name="clientName" autocomplete="name" maxlength="100" required></label>
 <label>Email<input name="email" type="email" autocomplete="email" maxlength="200" required></label>
 <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
@@ -80,7 +80,7 @@
 <label>Preferred date and time<input name="preferredAt" type="datetime-local" required></label>
 <label>Notes (optional)<textarea name="notes" rows="3" maxlength="2000" placeholder="Gate codes, temperament, or what to bring."></textarea></label>
 <label class="trap" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
-<label class="consent"><input type="checkbox" name="acceptedPrivacy" required><span>I agree to the <a href="/privacy/" target="_blank" rel="noopener">privacy notice</a> and will keep my private visit link safe.</span></label>
+<label class="consent"><input type="checkbox" name="acceptedPrivacy" required><span>I agree to the <a href="/petassist-local/privacy/" target="_blank" rel="noopener">privacy notice</a> and will keep my private visit link safe.</span></label>
 <p class="fare-line"><span>Visit total</span><strong id="request-fare">$35</strong></p>
 <div class="row-actions">
 <button class="button secondary" type="button" data-nav data-back="service">Back</button>
@@ -94,12 +94,12 @@
 </ol>
 </div>
 </form>
-<noscript><p>JavaScript is needed to request a visit. Email <a href="mailto:info@bayareaapps.com">info@bayareaapps.com</a>.</p></noscript>
+<noscript><p>JavaScript is needed to request a visit. You can also <a href="/petassist-local/privacy/#contact">contact support</a>.</p></noscript>
 <footer class="ride-legal">
-<a href="/">Bay Area Apps</a>
+<a href="/petassist-local/">Home Visits</a>
 <a href="/paws-whiskers/">Help Line</a>
-<a href="/privacy/">Privacy</a>
-<a href="mailto:info@bayareaapps.com">info@bayareaapps.com</a>
+<a href="/petassist-local/privacy/">Privacy</a>
+<a href="/petassist-local/privacy/#contact">contact support</a>
 </footer>
 </section>
 
@@ -117,7 +117,7 @@
 </div>
 <p class="form-status" id="portal-status" role="status"></p>
 <section class="visit-location" aria-labelledby="visit-location-title">
-<h2 id="visit-location-title">Pickup</h2>
+<h2 id="visit-location-title">Visit address</h2>
 <p id="visit-address"></p>
 <div class="portal-actions">
 <a class="button secondary" id="visit-map" target="_blank" rel="noopener noreferrer" hidden>Open your address in Maps</a>
@@ -142,7 +142,7 @@
 <button class="button secondary" type="button" id="visit-refresh">Refresh</button>
 <button class="button secondary" type="button" id="visit-copy">Copy private link</button>
 </div>
-<p class="visit-note">Keep this link private. Anyone with it can view the visit and send messages. Email <a href="mailto:info@bayareaapps.com">info@bayareaapps.com</a> for help.</p>
+<p class="visit-note">Keep this link private. Anyone with it can view the visit and send messages. You can <a href="/petassist-local/privacy/#contact">contact support</a> for help.</p>
 </section>
 </main>
 <script src="/assets/visits.js?v=20261013.1" defer></script>
