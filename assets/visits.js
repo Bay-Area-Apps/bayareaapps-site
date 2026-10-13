@@ -95,7 +95,10 @@ function render(visit) {
   }
 
   const summary = document.getElementById('visit-summary'); summary.replaceChildren();
-  for (const value of [visit.petName + ' · ' + visit.service, visit.visitStatus === 'cancelled' ? 'Cancelled' : visitStages.find(stage => stage.status === visit.visitStatus)?.title || 'Visit update', (visit.scheduledAt ? 'Confirmed: ' : 'Preferred: ') + new Date(visit.scheduledAt || visit.preferredAt).toLocaleString(), visit.amount + ' · ' + visit.status]) {
+  const cancelled = visit.visitStatus === 'cancelled';
+  const dateLabel = visit.scheduledAt ? (cancelled ? 'Previously scheduled: ' : 'Confirmed: ') : 'Preferred: ';
+  const paymentLabel = cancelled && visit.status === 'Payment requested' ? 'Checkout closed' : visit.status;
+  for (const value of [visit.petName + ' · ' + visit.service, cancelled ? 'Cancelled' : visitStages.find(stage => stage.status === visit.visitStatus)?.title || 'Visit update', dateLabel + new Date(visit.scheduledAt || visit.preferredAt).toLocaleString(), visit.amount + ' · ' + paymentLabel]) {
     const item = document.createElement('span'); item.textContent = value; summary.append(item);
   }
   const pay = document.getElementById('visit-pay'), link = safeCheckout(visit.checkoutURL, currentVisit);
