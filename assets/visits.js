@@ -1,7 +1,7 @@
 'use strict';
 const businessPreview = window.pawsBusinessPreview === true;
 let requestLocation = null, currentVersion = null;
-const visitsAPI = 'https://vet-helpline-development.dkjmmz6whh.workers.dev';
+const visitsAPI = 'https://vet-helpline-development.bayareaapps-paws.workers.dev';
 const menu = document.querySelector('.menu'), links = document.querySelector('#main-links');
 menu.addEventListener('click', () => menu.setAttribute('aria-expanded', String(links.classList.toggle('open'))));
 links.addEventListener('click', event => { if (event.target.closest('a')) { links.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); } });
