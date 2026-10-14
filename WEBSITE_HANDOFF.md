@@ -49,3 +49,24 @@ Verify GitHub Pages publication after saving. Cloudflare account access is neede
 
 ### October 8 verification update
 GitHub Pages deployment 37873054283 succeeded; both homepage links are live. App service-check run 37873272338 passed all seven read-only public checks from a GitHub runner: both service pages and standalone websites returned 200, Visits API health returned 200, Help Line CORS returned 204, and unauthenticated client-record access correctly returned 401. The earlier Cloudflare 1010 response was specific to this execution network, not proof of a global outage. The Xcode app built and launched on iPhone Simulator and Mac Catalyst in run 37872976295. Physical signing and authenticated account/device connections still require verification; no live client transaction was submitted.
+
+## October 13, 2026 — Website advertising and sponsorship preparation
+
+### Purpose and changes
+The owner requested website ad revenue and a sponsor offer, excluding the private owner app. Kept the existing AdSense publisher `ca-pub-4065093972696595` and root `ads.txt`. Added Google's account-verification meta tag to the three landing pages. The company homepage and Help Line public landing page already contained one AdSense loader each.
+
+Added a substantive public Home Visits preparation guide at `/petassist-local/guide/` with the same publisher loader. The original `/petassist-local/` remains the request/private-visit route with its restrictive CSP and no advertising or analytics scripts. The publisher meta tag is inert and does not load ads. Booking forms, visit messages, payments, client JavaScript, Cloudflare services, and the native app were not changed.
+
+Added matching sponsor inquiry pages at `/advertise/`, `/petassist-local/advertise/`, and `/paws-whiskers/advertise/`, linked from each brand's footer. They describe a quoted 30-day public placement and open an email draft to the existing business contact; no message is sent automatically. No active sponsor, fee, traffic, sale, or earnings is fabricated. `SPONSOR_OFFER.md` holds the owner offer, unsent outreach draft, and fulfillment template. Added sponsor privacy disclosures to all three privacy pages and updated the sitemap.
+
+### Validation before publication
+Live starting state: all three landing pages and root ads.txt returned HTTP 200. Publisher IDs matched between the two existing ad loaders and ads.txt. Static checks passed for internal file/anchor links, sponsor mailto recipient/subject/body, unique IDs, sitemap XML, and one correct AdSense loader on each public ad-enabled page. Request form and private portal content were compared byte-for-byte with the prior commit; client JavaScript, payment flow, CSP, and ads.txt were unchanged. `git diff --check` passed. No paid ad click, customer submission, charge, or sponsor email was made.
+
+### Google dashboard work still required
+The remote browser reached Google's public AdSense page but could not establish a readable signed-in dashboard. Do not call revenue active or account approval complete based on source code. After secure sign-in, verify that the dashboard's publisher is `pub-4065093972696595`; check `bayareaapps.com` under Sites for Ready and ads.txt Authorized; request review only if needed. The pet services are subdirectories of this domain, not separate AdSense site registrations.
+
+Review Auto ads on the actual desktop/mobile previews; use low density and disable intrusive anchor, vignette, side-rail, and intent overlays for the service experience. Use page exclusions for the exact `/petassist-local/` route (not its full prefix, because the guide is public), privacy pages, and sponsor inquiry pages. Fragments cannot be used as Auto ads exclusions. The private Visits page is protected independently by not loading ad code. Do not add any advertising code to Cloudflare intake, checkout, questions, client accounts, private conversations, or the owner app.
+
+Review and publish the applicable European-regulations certified CMP and US state-regulations messages in Google's Privacy & messaging using the existing site privacy URLs. A privacy policy alone is not a CMP. Check any account/identity/tax/payment requirements in the signed-in dashboard; owner-provided information or direct owner completion may be necessary. No new publisher, bank, payee, or account was created or changed.
+
+Official references: https://support.google.com/adsense/answer/7584263 ; https://support.google.com/adsense/answer/9262311 ; https://support.google.com/adsense/answer/13554116 .
