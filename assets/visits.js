@@ -42,7 +42,7 @@ function visitCalendar(schedule, visit, stamp = new Date()) {
     'UID:' + calendarEscape(schedule.id) + '@paws-whiskers-visits', 'DTSTAMP:' + calendarStamp(stamp), 'DTSTART:' + calendarStamp(schedule.scheduledAt)];
   if (Number.isInteger(schedule.durationMinutes) && schedule.durationMinutes > 0) lines.push('DTEND:' + calendarStamp(new Date(schedule.scheduledAt).getTime() + schedule.durationMinutes * 60000));
   lines.push('SEQUENCE:' + (Number.isInteger(schedule.version) ? schedule.version : 0), 'STATUS:CONFIRMED', 'SUMMARY:' + calendarEscape('Paws & Whiskers Home Visit · ' + visit.petName),
-    'LOCATION:' + calendarEscape(visit.address), 'DESCRIPTION:' + calendarEscape(visit.service + '\nAppointment time: ' + formatPacificDate(schedule.scheduledAt) + '\nCheck your private visit page for changes. Calendar downloads do not update automatically.'),
+    'LOCATION:' + calendarEscape(visit.address), 'DESCRIPTION:' + calendarEscape(visit.service + '\nAppointment time: ' + formatPacificDate(schedule.scheduledAt) + (schedule.durationEstimated ? '\nVisit length is estimated; confirm it with the business.' : '') + '\nCheck your private visit page for changes. Calendar downloads do not update automatically.'),
     'END:VEVENT', 'END:VCALENDAR');
   return lines.map(foldCalendarLine).join('\r\n') + '\r\n';
 }
@@ -118,7 +118,7 @@ function renderSchedule(visit) {
     pending.hidden = false;
     pending.textContent = 'New time requested: ' + formatPacificDate(schedule.changeRequestedAt) + '. Waiting for our approval. ' + (schedule.scheduledAt ? 'Your confirmed appointment above stays in place until we approve the change.' : 'This request is not yet confirmed.');
   }
-  if (schedule.status === 'confirmed' && Number.isInteger(schedule.durationMinutes) && schedule.durationMinutes > 0) { duration.hidden = false; duration.textContent = 'Scheduled visit length: ' + schedule.durationMinutes + ' minutes.'; }
+  if (schedule.status === 'confirmed' && Number.isInteger(schedule.durationMinutes) && schedule.durationMinutes > 0) { duration.hidden = false; duration.textContent = (schedule.durationEstimated ? 'Estimated visit length: ' : 'Scheduled visit length: ') + schedule.durationMinutes + ' minutes.' + (schedule.durationEstimated ? ' Ask us to confirm the duration of this earlier appointment.' : ''); }
 }
 function setScheduleBusy(value) {
   scheduleBusy = value;
