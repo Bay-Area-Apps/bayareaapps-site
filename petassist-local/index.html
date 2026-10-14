@@ -14,7 +14,7 @@
 <meta property="og:url" content="https://bayareaapps.com/petassist-local/">
 <link rel="stylesheet" href="/assets/local-theme.css">
 <link rel="stylesheet" href="/assets/brand-colors.css">
-<link rel="stylesheet" href="/assets/visits.css?v=20261005.2">
+<link rel="stylesheet" href="/assets/visits.css?v=20261014.schedule1">
 <meta name="google-adsense-account" content="ca-pub-4065093972696595"></head>
 <body class="ride-app">
 <a class="skip" href="#main">Skip to content</a>
@@ -36,8 +36,8 @@
 <section class="sheet" id="visit-landing" aria-labelledby="request-title">
 <div class="sheet-handle" aria-hidden="true"></div>
 <p class="where-kicker">At-home pet care</p>
-<h1 id="request-title">Where should we visit?</h1>
-<p class="lede">Tell us where your pet needs care. We confirm the visit before you pay. This screen does not show our location or how far away we are.</p>
+<h1 id="request-title">Schedule a Home Visit</h1>
+<p class="lede">Choose a service and request a time for your pet’s care at home. We review your address and needs, then confirm the appointment before you pay.</p>
 <p><a class="button" href="https://petassist-local-marketplace.bayareaapps-paws.workers.dev/">Open your Visits account</a></p>
 <p class="visit-note">Use your Visits account for saved pets, bookings, and messages. The request form below remains available for private-link visits.</p>
 <form class="ride-form" id="request-form">
@@ -71,14 +71,18 @@
 </div>
 </div>
 <div class="step" data-step="details" hidden>
-<h2 id="details-title" tabindex="-1">Confirm your visit</h2>
-<p class="lede">We confirm the time before any charge. Pay securely through PayPal, with Apple Pay where available.</p>
+<h2 id="details-title" tabindex="-1">Request your appointment</h2>
+<p class="lede">This is a time request, not a confirmed booking. We review availability, travel time, and your pet’s needs before confirming. Pay securely through PayPal, with Apple Pay where available, after confirmation.</p>
 <label>Your name<input name="clientName" autocomplete="name" maxlength="100" required></label>
 <label>Email<input name="email" type="email" autocomplete="email" maxlength="200" required></label>
 <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
 <label>Pet’s name<input name="petName" maxlength="100" required></label>
 <label>Species<select name="species"><option>Dog</option><option>Cat</option><option>Rabbit</option><option>Bird</option><option>Other</option></select></label>
-<label>Preferred date and time<input name="preferredAt" type="datetime-local" required></label>
+<label for="request-time">Preferred date and time · Pacific Time<input id="request-time" name="preferredAt" type="datetime-local" required aria-describedby="request-time-note request-time-feedback"></label>
+<p id="request-time-note" class="visit-note">All appointment times use Pacific Time (America/Los_Angeles), even when you are travelling. A requested time is subject to confirmation.</p>
+<label id="request-time-occurrence-label" hidden>Which occurrence of this time?
+<select id="request-time-occurrence" disabled aria-describedby="request-time-feedback"><option value="">Choose a time</option></select></label>
+<p id="request-time-feedback" class="form-status" role="status"></p>
 <label>Notes (optional)<textarea name="notes" rows="3" maxlength="2000" placeholder="Gate codes, temperament, or what to bring."></textarea></label>
 <label class="trap" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
 <label class="consent"><input type="checkbox" name="acceptedPrivacy" required><span>I agree to the <a href="/petassist-local/privacy/" target="_blank" rel="noopener">privacy notice</a> and will keep my private visit link safe.</span></label>
@@ -115,6 +119,37 @@
 <p id="journey-note" class="visit-note"></p>
 <ol class="visit-progress" id="visit-progress" aria-label="Appointment progress"></ol>
 <div class="visit-summary" id="visit-summary"></div>
+<section class="visit-schedule" aria-labelledby="visit-schedule-title">
+<h2 id="visit-schedule-title">Your appointment</h2>
+<p id="visit-schedule-summary" class="visit-note"></p>
+<p id="visit-schedule-pending" class="schedule-pending" hidden></p>
+<p id="visit-schedule-duration" class="visit-note" hidden></p>
+<p class="visit-note">Times are shown in Pacific Time (America/Los_Angeles).</p>
+<div class="portal-actions schedule-actions">
+<button class="button secondary" id="visit-calendar" type="button" hidden>Add to calendar</button>
+<button class="button secondary" id="visit-reschedule" type="button" hidden>Request another time</button>
+<button class="button secondary" id="visit-cancel" type="button" hidden>Cancel visit</button>
+</div>
+<form id="reschedule-form" class="ride-form" hidden>
+<label for="reschedule-time">New preferred date and time · Pacific Time<input id="reschedule-time" type="datetime-local" required aria-describedby="reschedule-note reschedule-time-feedback"></label>
+<p id="reschedule-note" class="visit-note">We must approve the new time. Your existing confirmed appointment stays in place until we confirm a change.</p>
+<label id="reschedule-time-occurrence-label" hidden>Which occurrence of this time?
+<select id="reschedule-time-occurrence" disabled aria-describedby="reschedule-time-feedback"><option value="">Choose a time</option></select></label>
+<p id="reschedule-time-feedback" class="form-status" role="status"></p>
+<div class="row-actions">
+<button class="button" id="reschedule-send" type="submit">Send time request</button>
+<button class="button secondary" id="reschedule-close" type="button">Keep current time</button>
+</div>
+</form>
+<div id="visit-cancel-confirm" class="schedule-pending" hidden>
+<p>Cancel this visit? Your appointment will be cancelled. Any payment or refund needs a separate review; cancelling does not issue an automatic refund.</p>
+<div class="row-actions">
+<button class="button" id="visit-cancel-send" type="button">Yes, cancel visit</button>
+<button class="button secondary" id="visit-cancel-close" type="button">Keep visit</button>
+</div>
+</div>
+<p id="visit-schedule-status" class="form-status" role="status"></p>
+</section>
 <div class="pay-bar">
 <a class="button gold" id="visit-pay" hidden target="_blank" rel="noopener noreferrer">Pay with PayPal or Apple Pay</a>
 <p class="visit-note" id="visit-payment-note"></p>
@@ -149,6 +184,6 @@
 <p class="visit-note">Keep this link private. Anyone with it can view the visit and send messages. You can <a href="/petassist-local/privacy/#contact">contact support</a> for help.</p>
 </section>
 </main>
-<script src="/assets/visits.js?v=20261013.1" defer></script>
+<script src="/assets/visits.js?v=20261014.schedule1" defer></script>
 </body>
 </html>

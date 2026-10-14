@@ -1,0 +1,10 @@
+{
+  "name": "paws-website-tests",
+  "private": true,
+  "version": "1.0.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node visits-schedule-helpers.test.cjs && node visits-schedule-dom.test.cjs"
+  },
+  "devDependencies": { "jsdom": "30.1.2" }
+}

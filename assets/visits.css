@@ -70,6 +70,13 @@ html:has(.ride-app),body.ride-app{height:100%;overflow:hidden}
 .pay-bar{position:sticky;bottom:0;background:#191d24;padding:8px 0 2px}
 .status-pill{display:inline-block;background:#2a1216;color:#ff6670;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase}
 .visit-location{margin-top:8px}
+.visit-schedule{margin:16px 0;padding:16px 0;border-top:1px solid #35383e;border-bottom:1px solid #35383e}
+.schedule-pending{padding:12px;border:1px solid #a88a40;border-radius:12px;background:#28241b;color:#f7f8fa;font-size:14px;line-height:1.5}
+.schedule-pending p{margin:0 0 8px}
+.schedule-actions{flex-direction:column}
+.visit-schedule .ride-form{padding:14px 0}
+.ride-app button:disabled{opacity:.55;cursor:wait}
+.ride-app button:focus-visible,.ride-app input:focus-visible,.ride-app select:focus-visible,.ride-app a:focus-visible{outline:3px solid #f2c65b;outline-offset:3px}
 [hidden]{display:none!important}
 @media(min-width:900px){
   .sheet{top:20px;bottom:20px;left:20px;right:auto;width:420px;max-height:none;border-radius:20px;border-bottom:1px solid #35383e}
