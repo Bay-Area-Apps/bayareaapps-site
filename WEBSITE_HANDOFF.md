@@ -70,3 +70,15 @@ Review Auto ads on the actual desktop/mobile previews; use low density and disab
 Review and publish the applicable European-regulations certified CMP and US state-regulations messages in Google's Privacy & messaging using the existing site privacy URLs. A privacy policy alone is not a CMP. Check any account/identity/tax/payment requirements in the signed-in dashboard; owner-provided information or direct owner completion may be necessary. No new publisher, bank, payee, or account was created or changed.
 
 Official references: https://support.google.com/adsense/answer/7584263 ; https://support.google.com/adsense/answer/9262311 ; https://support.google.com/adsense/answer/13554116 .
+
+
+## October 14, 2026 — AdSense content-quality remediation
+
+### Evidence and changes
+Owner supplied an AdSense screenshot explicitly reporting “Low value content.” Approval is not complete. Added substantive customer guides at `/about/`, `/petassist-local/how-it-works/`, and `/paws-whiskers/guide/`, with prominent links and sitemap entries. Guides explain separate service journeys, request versus confirmation, appointment messaging, multiple-pet preparation, payment questions, and practical Help Line question examples. Corrected company copy that implied a customer app or account was required. Existing preparation guide links to the new booking guide. No new ad loaders, tracking, prices, medical procedures, response guarantees, testimonials, or invented business credentials were added.
+
+### Scope and remaining work
+Booking form, private portal, client scripts, payment implementation, Cloudflare backends, and native app remain unchanged. Clinical service suitability must be reviewed before confirming an individual request. New content does not guarantee AdSense approval. Verify publication before requesting review; dashboard confirmation and review submission remain separate steps. Google source: https://support.google.com/adsense/answer/7299563 .
+
+### Validation for October 14 changes
+All 16 page/safety check groups passed, including new guides, local links/anchors, unique IDs, sitemap, and unchanged client forms/portal/JS. Existing private Visits route still has no ad/analytics loader. No new loaders were added to the three new guides. Live publication verification is recorded after deployment.
