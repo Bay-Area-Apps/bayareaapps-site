@@ -12,6 +12,13 @@ var serviceValues = {
   phone: "Phone Support · $25",
   free: "Free Community Support — Private Message"
 };
+// Keep stored service names stable; present the current support names to clients.
+function serviceDisplayName(service) {
+  return String(service || "")
+    .replace(/^Quick Question(?= —| ·|$)/, "Focused Guidance")
+    .replace(/^Detailed Guidance(?= —| ·|$)/, "In-Depth Support")
+    .replace(/^Free Community Support(?= —| ·|$)/, "Free Advice");
+}
 function byID(id) { return document.getElementById(id); }
 function showFormNotice(message) {
   var notice = byID("formNotice"); notice.textContent = message; notice.hidden = false;
@@ -31,7 +38,7 @@ function canonicalConversationURL(value) {
 }
 function updateServiceGuidance(service) {
   var free = isFreeSupport(service), phone = replyMethodFromService(service) === "Phone call";
-  byID("selectedServiceName").textContent = service.replace(" — Private Message", "").replace(" · $", " · $") || "Choose your support option";
+  byID("selectedServiceName").textContent = serviceDisplayName(service).replace(" — Private Message", "") || "Choose your support option";
   byID("serviceNote").textContent = free ? "Free support. No payment or explanation is required." : "You won’t pay until I confirm availability.";
   byID("phone").required = phone;
   byID("phone").setCustomValidity("");
@@ -149,9 +156,9 @@ function reviewGroup(title, entries) {
 function renderReview() {
   var review = byID("reviewSummary"); review.replaceChildren();
   var value = function (id) { return byID(id).value.trim(); };
-  review.append(reviewGroup("Support option", [["Service", value("requestedService")], ["Payment", isFreeSupport(value("requestedService")) ? "No payment required" : "Only after availability approval"]]));
+  review.append(reviewGroup("Support option", [["Service", serviceDisplayName(value("requestedService"))], ["Payment", isFreeSupport(value("requestedService")) ? "No payment required" : "Only after availability approval"]]));
   review.append(reviewGroup("Your pet", [["Name", value("petName")], ["Species", value("species")], ["Age", value("age")], ["Breed", value("breed")], ["Sex", value("sex")], ["Spayed / neutered", value("reproductiveStatus")], ["Weight", value("weight")]]));
-  review.append(reviewGroup("Your question", [["Topic", value("category")], ["Question", value("question")], ["Urgency", value("urgency")], ["Started", value("symptomOnset")], ["Changes", value("symptomTrend")], ["Eating", value("appetite")], ["Drinking", value("drinking")], ["Urination", value("urination")], ["Stool", value("stool")], ["Energy", value("energy")], ["Vomiting", value("vomiting")], ["Medical history", value("medicalHistory")], ["Medications", value("currentMedications")], ["Already tried", value("actionsTaken")], ["Files", Array.from(byID("attachments").files || []).map(function (file) { return file.name; }).join(", ") || "None"]]));
+  review.append(reviewGroup("Your concern", [["Topic", value("category")], ["Details", value("question")], ["Urgency", value("urgency")], ["Started", value("symptomOnset")], ["Changes", value("symptomTrend")], ["Eating", value("appetite")], ["Drinking", value("drinking")], ["Urination", value("urination")], ["Stool", value("stool")], ["Energy", value("energy")], ["Vomiting", value("vomiting")], ["Medical history", value("medicalHistory")], ["Medications", value("currentMedications")], ["Already tried", value("actionsTaken")], ["Files", Array.from(byID("attachments").files || []).map(function (file) { return file.name; }).join(", ") || "None"]]));
   review.append(reviewGroup("Your details", [["Name", value("name")], ["Email", value("email")], ["Phone", value("phone")]]));
 }
 document.querySelectorAll("[data-service]").forEach(function (button) { button.addEventListener("click", function () { openIntake(serviceValues[button.dataset.service]); }); });
@@ -280,11 +287,11 @@ byID("phone").addEventListener("input", function () { byID("phone").setCustomVal
 
     if (WORKER_URL.indexOf("REPLACE_WITH") === 0) {
       // Email mode: open the client's mail app with the question pre-filled.
-      var subject = "Care line question (" + (payload.petName || payload.species) + " · " + payload.category + ")";
+      var subject = "Care line support request (" + (payload.petName || payload.species) + " · " + payload.category + ")";
       var body = "Name: " + payload.name +
         "\nReply-to email: " + payload.email +
         "\nPreferred reply: " + payload.preferredReply +
-        "\nService requested: " + payload.requestedService +
+        "\nService requested: " + serviceDisplayName(payload.requestedService) +
         "\nPayment status: " + payload.paymentStatus +
         "\nPreferred payment: " + payload.paymentMethod +
         "\nPayment amount: " + payload.paymentAmount +
@@ -311,7 +318,7 @@ byID("phone").addEventListener("input", function () { byID("phone").setCustomVal
         "\nMedications/supplements: " + payload.currentMedications +
         "\nAlready tried/contacted vet: " + payload.actionsTaken +
         (payload.attachmentSummary ? "\n\nFiles selected:\n" + payload.attachmentSummary + "\n\nPlease attach these files to this email before sending." : "") +
-        "\n\nQuestion:\n" + payload.question;
+        "\n\nSupport request:\n" + payload.question;
       window.location.href = "mailto:" + HELPLINE_EMAIL +
         "?subject=" + encodeURIComponent(subject) +
         "&body=" + encodeURIComponent(body);
@@ -322,7 +329,7 @@ byID("phone").addEventListener("input", function () { byID("phone").setCustomVal
         note.className = "note";
         e.target.appendChild(note);
       }
-      note.innerHTML = "📧 Your email app should have opened with your question filled in. If you selected files, attach them to that email, then <strong>press send there</strong>. If nothing opened, email it to the public care-line address shown here: <strong>" + HELPLINE_EMAIL + "</strong>.<br><br><strong>Note:</strong> this address should be a public alias that forwards to the operator privately. Email fallback goes to the mailbox only and will not appear in the private operator app until the CloudKit worker or inbound email relay is connected.";
+      note.innerHTML = "📧 Your email app should have opened with your support request filled in. If you selected files, attach them to that email, then <strong>press send there</strong>. If nothing opened, email it to the public care-line address shown here: <strong>" + HELPLINE_EMAIL + "</strong>.<br><br><strong>Note:</strong> this address should be a public alias that forwards to the operator privately. Email fallback goes to the mailbox only and will not appear in the private operator app until the CloudKit worker or inbound email relay is connected.";
       return;
     }
 
@@ -358,11 +365,11 @@ byID("phone").addEventListener("input", function () { byID("phone").setCustomVal
       section.replaceChildren();
       section.classList.add("success-receipt");
       var heading = document.createElement("h2");
-      heading.textContent = "✅ Question sent!";
+      heading.textContent = "Support request received!";
       var message = document.createElement("p");
       message.textContent = isFreeSupport(payload.requestedService)
-        ? "Thanks, " + payload.name + ". Your Free Community Support request for " + (payload.petName || "your dog or cat") + " was received. No payment is required."
-        : "Thanks, " + payload.name + ". Your " + payload.requestedService + " request for " + (payload.petName || "your dog or cat") + " was received and is waiting for availability approval. You have not been charged. Payment will become available after the operator approves your question.";
+        ? "Thanks, " + payload.name + ". Your Free Advice request for " + (payload.petName || "your dog or cat") + " was received. No payment is required."
+        : "Thanks, " + payload.name + ". Your " + serviceDisplayName(payload.requestedService) + " request for " + (payload.petName || "your dog or cat") + " was received and is waiting for availability approval. You have not been charged. Payment will become available after the operator approves your support request.";
       section.append(heading, message);
       if (data.statusURL && isTrustedStatusURL(data.statusURL)) {
         var statusLink = document.createElement("a");
@@ -376,11 +383,11 @@ byID("phone").addEventListener("input", function () { byID("phone").setCustomVal
       submissionPending = false;
       setNavigationBusy(false);
       button.disabled = false;
-      button.innerHTML = 'Send my question <svg class="icon" aria-hidden="true"><use href="#icon-arrow"/></svg>';
+      button.innerHTML = 'Send my request <svg class="icon" aria-hidden="true"><use href="#icon-arrow"/></svg>';
       var fallback = HELPLINE_EMAIL.indexOf("REPLACE_WITH") === 0
         ? "Please try again in a few minutes."
-        : "Please try again in a few minutes, or email your question directly to " + HELPLINE_EMAIL + ".";
-      showFormNotice("Your question couldn’t be sent. " + (error.message || fallback) + " Your details and files are still here. Please retry.");
+        : "Please try again in a few minutes, or email your support request directly to " + HELPLINE_EMAIL + ".";
+      showFormNotice("Your support request couldn’t be sent. " + (error.message || fallback) + " Your details and files are still here. Please retry.");
     });
   });
 

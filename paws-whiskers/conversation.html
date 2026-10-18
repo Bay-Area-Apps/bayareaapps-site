@@ -9,8 +9,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://vet-helpline-development.dkjmmz6whh.workers.dev; base-uri 'none'; form-action 'none'; object-src 'none'">
   <title>Your private conversation · Paws &amp; Whiskers Help Line</title>
   <link rel="icon" type="image/png" href="icons/icon-512.png">
-  <link rel="stylesheet" href="conversation.css?v=20261017.1">
-  <script src="conversation.js?v=20261016.1" defer></script>
+  <link rel="stylesheet" href="conversation.css?v=20261017.2">
+  <script src="conversation.js?v=20261017.3" defer></script>
 </head>
 <body class="conversation-page">
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -36,7 +36,7 @@
         <h2 id="service"></h2>
         <div id="payment-badge" class="payment-badge"><svg class="icon" aria-hidden="true"><use href="#icon-clock"/></svg><span id="payment"></span></div>
         <div class="availability-section"><p id="availability" role="status"></p><a id="pay" class="button primary payment-action" hidden rel="noopener noreferrer" target="_blank">Pay with PayPal or Apple Pay</a></div>
-        <div class="original-question"><h3>Your question</h3><p id="question"></p></div>
+        <div class="original-question"><h3>Your original message</h3><p id="question"></p></div>
         <div class="private-link"><button id="copy" class="button secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-link"/></svg>Copy private link</button><p>Keep this link safe. Anyone with this link can view your conversation.</p></div>
       </aside>
       <div class="conversation-panel">
@@ -46,14 +46,14 @@
           <ol id="messages" aria-label="Conversation messages" aria-live="polite" aria-relevant="additions text"></ol>
           <p class="notification-note">No email or text alerts. Return to this page to check for replies.</p>
         </div>
-        <form id="reply"><label for="message">Add a message</label><textarea id="message" placeholder="Type your message here…" maxlength="4000" rows="4" required aria-describedby="message-help"></textarea><button class="button primary" id="send" type="submit"><svg class="icon" aria-hidden="true"><use href="#icon-send"/></svg><span id="send-label">Send message</span></button><p id="message-help" class="visually-hidden">Up to 4,000 characters. Keep this page open while sending; your draft is not saved after you close it.</p></form>
+        <form id="reply"><label for="message">Add a message</label><textarea id="message" placeholder="Type your message here…" maxlength="4000" rows="4" aria-describedby="message-help"></textarea><div class="reply-uploads"><label for="replyAttachments">Add photos, videos or files <span>(optional)</span></label><input type="file" id="replyAttachments" multiple aria-describedby="replyAttachmentHelp"><p id="replyAttachmentHelp">Any file type. Up to 4 files per message, 10 MB each; 40 MB total. Private download links expire after 30 days.</p><ul id="replyFileList" class="reply-file-list" aria-live="polite"></ul><button class="button secondary" id="clearReplyFiles" type="button" hidden>Clear selected files</button></div><button class="button primary" id="send" type="submit"><svg class="icon" aria-hidden="true"><use href="#icon-send"/></svg><span id="send-label">Send message</span></button><p id="message-help" class="visually-hidden">Add a message, files, or both. Up to 4,000 characters. Keep this page open while sending; your draft and selected files are not saved after you close it.</p></form>
         <p id="phone-note" class="phone-note" hidden>Requested a phone call? Use this page to arrange a time. The call takes place separately.</p>
       </div>
     </section>
   </main>
   <footer class="conversation-footer page-width">
     <div class="footer-information"><p><svg class="icon" aria-hidden="true"><use href="#icon-leaf"/></svg>General education only. For urgent concerns, contact a veterinarian.</p><nav aria-label="Policies"><a href="privacy.html">Privacy</a><a href="terms.html">Terms and communication policy</a><a href="mailto:info@bayareaapps.com">Business support</a></nav></div>
-    <a class="brand footer-brand" href="index.html"><svg class="brand-mark" aria-hidden="true"><use href="#icon-paw"/></svg><span>Paws &amp; Whiskers <span class="brand-service">Help Line</span><small>Kinder questions. Happier pets.</small></span></a>
+    <a class="brand footer-brand" href="index.html"><svg class="brand-mark" aria-hidden="true"><use href="#icon-paw"/></svg><span>Paws &amp; Whiskers <span class="brand-service">Help Line</span><small>Personal support. Happier pets.</small></span></a>
   </footer>
 </body>
 </html>

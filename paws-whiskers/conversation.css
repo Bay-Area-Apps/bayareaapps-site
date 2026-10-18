@@ -22,3 +22,17 @@
 
 ::selection{background:var(--sage-accent);color:var(--canvas)}
 @media print{.poster-page{color-scheme:light;--canvas:#fff;--surface:#fff;--ink:#173b31;--forest:#173b31;--muted:#526158;--border:#cbd0c5;--warning-surface:#fbf1ed;--warning-text:#a6452d;--warning-border:#d59d8d;color:var(--ink)}.poster-page .poster{background:#fff}}
+
+/* Private conversation attachments */
+.reply-uploads{margin-top:22px;padding-top:18px;border-top:1px solid var(--border)}
+#reply .reply-uploads label{font-size:16px;margin-bottom:10px}
+.reply-uploads label span{color:var(--muted)}
+#replyAttachments{display:block;width:100%;max-width:100%;font-size:15px;color:var(--ink)}
+#replyAttachments::file-selector-button{min-height:44px;margin-right:10px;padding:9px 14px;border:1px solid var(--control-border);border-radius:8px;background:var(--elevated);color:var(--ink);font:inherit;cursor:pointer}
+#replyAttachments:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+#replyAttachmentHelp{font-size:14px;color:var(--muted);margin:10px 0}
+.reply-file-list{font-size:14px;overflow-wrap:anywhere;padding-left:20px;margin:8px 0 14px}
+.reply-file-list:empty{display:none}
+#messages .message-attachments{display:grid;gap:6px;list-style:none;padding:0;margin:10px 0 0}
+#messages .message-attachments li{width:100%;margin:0;padding:0;background:none;border-radius:0}
+.message-attachments a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:3px;font-size:15px;overflow-wrap:anywhere}
