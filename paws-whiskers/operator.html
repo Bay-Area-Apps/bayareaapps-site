@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Operator Toolkit — Paws & Whiskers Help Line</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-512.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#101c19"><meta name="color-scheme" content="dark">
+<style>
+  :root {
+    color-scheme: dark;
+    --navy: #263e34;
+    --navy-dark: #101c19;
+    --red: #a9442e;
+    --red-bg: #3b2924;
+    --ink: #f4f1e8;
+    --muted: #b8c6ba;
+    --bg: #101c19;
+    --card: #192b25;
+    --border: #3b5146;
+  }
+  * { box-sizing: border-box; }
+  button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible { outline: 3px solid #d6b879; outline-offset: 4px; }
+  input { accent-color: #b8cfad; }
+  a { color: inherit; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+  header h1 { margin: 0; font-size: 1.35rem; }
+  header p { margin: .25rem 0 0; font-size: .9rem; opacity: .9; }
+  main { max-width: 640px; margin: 0 auto; padding: .75rem 1rem 2rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.15rem;
+    margin: .9rem 0;
+  }
+  .card h2 { margin: 0 0 .5rem; font-size: 1.1rem; }
+  .quick { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .btn {
+    display: inline-block;
+    padding: .7rem 1rem;
+    border-radius: 8px;
+    border: none;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+  }
+  .btn-red { background: var(--red); color: #fff; flex: 1 1 45%; }
+  .btn-navy { background: var(--navy); color: #fff; }
+  .check-item { display: flex; gap: .6rem; align-items: flex-start; margin: .5rem 0; }
+  .check-item input { margin-top: .3rem; transform: scale(1.2); }
+  details {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: .5rem 0;
+    background: #21382f;
+  }
+  summary {
+    padding: .7rem .9rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .tpl-body { padding: 0 .9rem .9rem; }
+  .tpl-body pre {
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: .88rem;
+    background: #101c19;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .7rem;
+    margin: 0 0 .6rem;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+  .copy-btn { background: var(--navy); color: #fff; }
+  .copy-btn.copied { background: var(--navy-dark); }
+  .flags { columns: 2; gap: 1.5rem; padding-left: 1.1rem; margin: .4rem 0 0; font-size: .92rem; }
+  .flags li { margin-bottom: .3rem; break-inside: avoid; }
+  @media (max-width: 480px) { .flags { columns: 1; } }
+  .note { font-size: .85rem; color: var(--muted); }
+  .reset-btn { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 8px; padding: .4rem .8rem; cursor: pointer; font-size: .85rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><span aria-hidden="true">🐾</span> Operator Toolkit</h1>
+  <p>Your pocket kit for answering care-line questions</p>
+</header>
+
+<main>
+
+  <section class="card">
+    <h2>Quick actions</h2>
+    <div class="quick">
+      <a class="btn btn-red" href="tel:8884264435">☎️ Poison Control</a>
+      <a class="btn btn-red" href="https://vetlocator.com/" target="_blank" rel="noopener noreferrer">🏥 ER Vet Locator</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Pre-send scope check</h2>
+    <p class="note">Run this on every reply before you hit send.</p>
+    <div class="check-item">
+      <input type="checkbox" id="c1">
+      <label for="c1">No diagnosis, dose, treatment plan, or outcome prediction anywhere in my reply</label>
+    </div>
+    <div class="check-item">
+      <input type="checkbox" id="c2">
+      <label for="c2">Nothing discourages seeing a vet — referral offered where there's any doubt</label>
+    </div>
+    <div class="check-item">
+      <input type="checkbox" id="c3">
+      <label for="c3">Standard disclaimer is at the bottom of the reply</label>
+    </div>
+    <p><button class="reset-btn" id="resetChecks">Reset for next reply</button></p>
+  </section>
+
+  <section class="card">
+    <h2>Reply templates</h2>
+    <p class="note">Tap to expand, copy, then personalize the [bracketed] parts in your email app. The disclaimer is already included in each.</p>
+    <div id="templates"></div>
+  </section>
+
+  <section class="card">
+    <h2>Emergency red flags</h2>
+    <p class="note">Any of these in a message → send the emergency template first, immediately.</p>
+    <ul class="flags">
+      <li>Difficulty breathing</li>
+      <li>Seizures or collapse</li>
+      <li>Suspected poisoning</li>
+      <li>Hit by car / major trauma</li>
+      <li>Bloat / unproductive retching</li>
+      <li>Can't urinate (male cats!)</li>
+      <li>Pale or blue gums</li>
+      <li>Uncontrolled bleeding</li>
+      <li>Heatstroke symptoms</li>
+      <li>Eye injury</li>
+      <li>Prolonged labor</li>
+      <li>Snake or spider bite</li>
+    </ul>
+  </section>
+
+  <p class="note" style="text-align:center;">Golden rule: when in doubt, refer out. A referral is never the wrong answer.</p>
+
+</main>
+
+<script>
+  var DISCLAIMER = "\n---\nI am a veterinary assistant, not a veterinarian. This is general dog-and-cat care education only, not veterinary medical advice. I cannot diagnose, prescribe, recommend medication or doses, provide treatment, interpret diagnostic results, or establish a veterinarian-client-patient relationship. Contact a licensed veterinarian for medical concerns. For a possible emergency, contact an emergency veterinary hospital immediately.";
+
+  var TEMPLATES = [
+    {
+      title: "1 · Emergency redirect (send first, immediately)",
+      body: "Hi [name] — what you're describing could be an emergency, and I don't want you waiting on me. Please contact an emergency veterinarian right away.\n\n- Find one near you: https://vetlocator.com/\n- Suspected poisoning: ASPCA Animal Poison Control, (888) 426-4435 (24/7; a consultation fee may apply)\n\nI hope [pet's name] is okay. Once things are stable, I'm happy to help with general care questions."
+    },
+    {
+      title: "2 · This needs a vet",
+      body: "Hi [name] — thanks for reaching out about [pet's name]. What you're describing is something a licensed veterinarian should examine in person — as a veterinary assistant I can't assess or diagnose it, and I wouldn't want to guess with [pet's name]'s health.\n\nI'd recommend calling your vet [today / within the next day or two] and mentioning: [symptom], how long it's been going on, and [any detail they gave].\n\nTo make the visit productive, jot down: when it started, whether it's getting better or worse, any changes in eating, drinking, energy, or bathroom habits, and a photo or video if it's visible or intermittent."
+    },
+    {
+      title: "3 · General care answer (in scope)",
+      body: "Hi [name] — great question about [topic]!\n\n[General, educational answer. No doses, no product recommendations for their specific dog or cat, no \"your pet has/needs X.\"]\n\nEvery dog and cat is different, so it's worth mentioning this at [pet's name]'s next checkup too — your vet can tailor it specifically."
+    },
+    {
+      title: "4 · Medication / dosing (always refuse the dose)",
+      body: "Hi [name] — I have to be upfront: as a veterinary assistant I'm not able to recommend medications or doses, even over-the-counter ones. Dosing depends on species, weight, health history, and other medications, and getting it wrong can be dangerous — several common human medications are toxic to dogs and cats.\n\nThe good news is this is usually a quick phone call: your vet's office can often answer dosing questions over the phone for established patients, and ASPCA Poison Control at (888) 426-4435 can advise if [pet's name] already ingested something."
+    },
+    {
+      title: "5 · Can't afford the vet",
+      body: "Hi [name] — I hear you, vet care costs are genuinely hard, and I'm sorry you're in this spot. I can't recommend home treatment as a substitute, but here are options that help a lot of people:\n\n- Low-cost/nonprofit clinics and humane societies (search \"[their city] low cost vet clinic\")\n- Veterinary school clinics, if one is nearby\n- Payment plans: many clinics offer them, and CareCredit / Scratchpay are widely accepted\n- For urgent situations, some ER clinics will discuss financial options — always worth asking\n\nPlease don't wait too long if [pet's name] seems to be getting worse."
+    },
+    {
+      title: "6 · Asked to second-guess their vet (never do it)",
+      body: "Hi [name] — I'm not able to weigh in on your veterinarian's advice; they've examined [pet's name] and know the full picture, which I don't. If something about the plan doesn't sit right or wasn't clear, the best move is to call the clinic and ask — vets expect follow-up questions, and you're also always entitled to a second opinion from another licensed veterinarian."
+    }
+  ];
+
+  var container = document.getElementById("templates");
+  TEMPLATES.forEach(function (t, i) {
+    var details = document.createElement("details");
+    var summary = document.createElement("summary");
+    summary.textContent = t.title;
+    var div = document.createElement("div");
+    div.className = "tpl-body";
+    var pre = document.createElement("pre");
+    pre.textContent = t.body + "\n" + DISCLAIMER;
+    var btn = document.createElement("button");
+    btn.className = "btn copy-btn";
+    btn.textContent = "Copy template";
+    btn.addEventListener("click", function () { copyText(t.body + "\n" + DISCLAIMER, btn); });
+    div.appendChild(pre);
+    div.appendChild(btn);
+    details.appendChild(summary);
+    details.appendChild(div);
+    container.appendChild(details);
+  });
+
+  function copyText(text, btn) {
+    function done() {
+      btn.textContent = "Copied ✓";
+      btn.classList.add("copied");
+      setTimeout(function () {
+        btn.textContent = "Copy template";
+        btn.classList.remove("copied");
+      }, 1500);
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); done(); } catch (err) {}
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  document.getElementById("resetChecks").addEventListener("click", function () {
+    ["c1", "c2", "c3"].forEach(function (id) { document.getElementById(id).checked = false; });
+  });
+
+  if ("serviceWorker" in navigator && window.location.protocol === "https:") {
+    navigator.serviceWorker.register("sw.js");
+  }
+</script>
+
+</body>
+</html>

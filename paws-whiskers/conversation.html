@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#101c19"><meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://vet-helpline-development.dkjmmz6whh.workers.dev; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Your private conversation · Paws &amp; Whiskers Help Line</title>
+  <link rel="icon" type="image/png" href="icons/icon-512.png">
+  <link rel="stylesheet" href="conversation.css?v=20261017.1">
+  <script src="conversation.js?v=20261016.1" defer></script>
+</head>
+<body class="conversation-page">
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-paw" viewBox="0 0 48 48"><ellipse cx="13" cy="14" rx="5" ry="7" transform="rotate(-20 13 14)"/><ellipse cx="25" cy="10" rx="5" ry="7"/><ellipse cx="37" cy="15" rx="5" ry="7" transform="rotate(20 37 15)"/><ellipse cx="6" cy="25" rx="4" ry="6" transform="rotate(-30 6 25)"/><path d="M13 31c3-6 6-11 11-11s9 5 12 11c5 10-2 14-9 11-2-1-4-1-6 0-8 3-14-1-8-11Z"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M20 8a8 8 0 0 0-14-3L3 8m0-5v5h5M4 16a8 8 0 0 0 14 3l3-3m0 5v-5h-5"/></symbol>
+    <symbol id="icon-link" viewBox="0 0 24 24"><path d="m10 13 4-4M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0m2 1 1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0" transform="translate(1 1)"/></symbol>
+    <symbol id="icon-send" viewBox="0 0 24 24"><path d="m21 3-7 18-4-7-7-4 18-7ZM10 14 21 3"/></symbol>
+    <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M12 21V11M12 13C5 13 3 8 3 3c6 0 9 4 9 10Zm0-2c0-6 4-8 9-8 0 6-3 10-9 10"/></symbol>
+  </svg>
+  <a id="skip" class="skip-link" href="#main">Skip to your conversation</a>
+  <header class="conversation-header page-width">
+    <a href="index.html" class="brand"><svg class="brand-mark" aria-hidden="true"><use href="#icon-paw"/></svg><span>Paws &amp; Whiskers <span class="brand-service">Help Line</span></span></a>
+    <nav aria-label="Website">
+      <a class="active" href="index.html">Website</a><a href="index.html#how-it-works">How It Works</a><a href="index.html#support">Topics</a><a href="welcome.html">About</a><a href="mailto:info@bayareaapps.com">Contact</a>
+    </nav>
+  </header>
+  <main id="main" class="page-width" tabindex="-1">
+    <div class="conversation-intro"><h1 id="pet">Your private conversation</h1><p>Keep this link safe. It’s how you return to your conversation.</p></div>
+    <div class="status-line"><p id="status" role="status" aria-live="polite">Loading your conversation…</p><button id="retry" type="button" class="button secondary" hidden>Try again</button></div>
+    <section id="thread" class="conversation-layout" aria-label="Your request and messages" hidden>
+      <aside class="request-summary" aria-label="Your request">
+        <h2 id="service"></h2>
+        <div id="payment-badge" class="payment-badge"><svg class="icon" aria-hidden="true"><use href="#icon-clock"/></svg><span id="payment"></span></div>
+        <div class="availability-section"><p id="availability" role="status"></p><a id="pay" class="button primary payment-action" hidden rel="noopener noreferrer" target="_blank">Pay with PayPal or Apple Pay</a></div>
+        <div class="original-question"><h3>Your question</h3><p id="question"></p></div>
+        <div class="private-link"><button id="copy" class="button secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-link"/></svg>Copy private link</button><p>Keep this link safe. Anyone with this link can view your conversation.</p></div>
+      </aside>
+      <div class="conversation-panel">
+        <div class="messages-heading"><h2>Messages</h2><button id="refresh" class="button secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-refresh"/></svg>Refresh</button></div>
+        <div class="messages-stage">
+          <div id="empty-messages" class="empty-messages" hidden><img src="assets/help-line-conversation-pets.png" alt="" width="180" height="140"><h3>Your reply will appear here.</h3></div>
+          <ol id="messages" aria-label="Conversation messages" aria-live="polite" aria-relevant="additions text"></ol>
+          <p class="notification-note">No email or text alerts. Return to this page to check for replies.</p>
+        </div>
+        <form id="reply"><label for="message">Add a message</label><textarea id="message" placeholder="Type your message here…" maxlength="4000" rows="4" required aria-describedby="message-help"></textarea><button class="button primary" id="send" type="submit"><svg class="icon" aria-hidden="true"><use href="#icon-send"/></svg><span id="send-label">Send message</span></button><p id="message-help" class="visually-hidden">Up to 4,000 characters. Keep this page open while sending; your draft is not saved after you close it.</p></form>
+        <p id="phone-note" class="phone-note" hidden>Requested a phone call? Use this page to arrange a time. The call takes place separately.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="conversation-footer page-width">
+    <div class="footer-information"><p><svg class="icon" aria-hidden="true"><use href="#icon-leaf"/></svg>General education only. For urgent concerns, contact a veterinarian.</p><nav aria-label="Policies"><a href="privacy.html">Privacy</a><a href="terms.html">Terms and communication policy</a><a href="mailto:info@bayareaapps.com">Business support</a></nav></div>
+    <a class="brand footer-brand" href="index.html"><svg class="brand-mark" aria-hidden="true"><use href="#icon-paw"/></svg><span>Paws &amp; Whiskers <span class="brand-service">Help Line</span><small>Kinder questions. Happier pets.</small></span></a>
+  </footer>
+</body>
+</html>

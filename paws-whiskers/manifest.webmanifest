@@ -1,0 +1,14 @@
+{
+  "name": "Paws & Whiskers Help Line",
+  "short_name": "Paws & Whiskers Help Line",
+  "description": "General dog-and-cat care guidance from a veterinary assistant.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101c19",
+  "theme_color": "#101c19",
+  "icons": [
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-180.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
