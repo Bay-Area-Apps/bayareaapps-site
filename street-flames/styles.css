@@ -17,6 +17,68 @@ body {
   color: var(--white);
   line-height: 1.7;
   letter-spacing: 0.01em;
+  padding-top: 70px;
+}
+
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 0 2rem;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+}
+
+.nav-cta {
+  background: var(--red);
+  color: #fff !important;
+  padding: 0.6rem 1.4rem;
+  border-radius: 2px;
+}
+
+.nav-cta:hover {
+  background: #a01830;
 }
 
 .hero {
@@ -28,6 +90,7 @@ body {
   text-align: center;
   padding: 2rem;
   position: relative;
+  margin-top: -70px;
 }
 
 .hero-content {
@@ -288,7 +351,14 @@ footer a:hover {
   text-decoration: underline;
 }
 
+@media (max-width: 768px) {
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 0.8rem; }
+  .nav-cta { padding: 0.5rem 1rem; }
+}
+
 @media (max-width: 600px) {
   .section { padding: 4rem 1.5rem; }
   .booking-card { padding: 2rem 1.5rem; }
+  .nav-logo { font-size: 1.1rem; }
 }
