@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Street Flames Admin</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .admin-container { max-width: 800px; margin: 2rem auto; padding: 2rem; }
+    .password-box { background: #1a1a1a; padding: 2rem; border-radius: 12px; border: 1px solid #d4af37; text-align: center; }
+    .requests { margin-top: 2rem; }
+    .request-card { background: #111; border: 1px solid #c41e3a; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+    .request-card h4 { color: #d4af37; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <h1 style="text-align:center; color:#d4af37;">Street Flames Admin</h1>
+    <p style="text-align:center;">Private access — no Wix login needed</p>
+
+    <div id="login" class="password-box">
+      <h2>Enter Password</h2>
+      <input type="password" id="pw" placeholder="Password" style="padding:0.8rem; width:80%; margin:1rem 0; background:#000; color:#fff; border:1px solid #444; border-radius:6px;">
+      <button onclick="checkPassword()" class="cta-btn">Access Admin</button>
+      <p id="login-error" style="color:#c41e3a; margin-top:1rem;"></p>
+    </div>
+
+    <div id="dashboard" class="hidden">
+      <h2>Booking Requests</h2>
+      <p>Requests submitted via the public form appear here (stored in this browser).</p>
+      <div id="requests" class="requests">
+        <p>No requests yet. Submit a test from the main site.</p>
+      </div>
+      <button onclick="clearRequests()" class="cta-btn secondary" style="margin-top:1rem;">Clear All Requests</button>
+      <hr style="margin:2rem 0; border-color:#333;">
+      <h3>Quick Actions</h3>
+      <a href="/" class="cta-btn secondary">Back to Bay Area Apps</a>
+      <button onclick="logout()" class="cta-btn secondary" style="margin-top:1rem;">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    const CORRECT_PW = "streetflame";
+
+    function checkPassword() {
+      const input = document.getElementById('pw').value;
+      if (input === CORRECT_PW) {
+        document.getElementById('login').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        loadRequests();
+      } else {
+        document.getElementById('login-error').textContent = "Incorrect password";
+      }
+    }
+
+    function loadRequests() {
+      const stored = JSON.parse(localStorage.getItem('streetflames_requests') || '[]');
+      const container = document.getElementById('requests');
+      if (stored.length === 0) {
+        container.innerHTML = '<p>No requests yet. Submit a test from the main site.</p>';
+        return;
+      }
+      container.innerHTML = stored.map((r, i) => `
+        <div class="request-card">
+          <h4>${r.name} — ${r.date}</h4>
+          <p><strong>Email:</strong> ${r.email}</p>
+          <p><strong>Guests:</strong> ${r.guests} | <strong>Menu:</strong> ${r.menu}</p>
+          <p><strong>Details:</strong> ${r.details || '—'}</p>
+          <p class="small">Submitted: ${r.time}</p>
+        </div>
+      `).join('');
+    }
+
+    function clearRequests() {
+      if (confirm('Clear all stored requests?')) {
+        localStorage.removeItem('streetflames_requests');
+        loadRequests();
+      }
+    }
+
+    function logout() {
+      document.getElementById('dashboard').classList.add('hidden');
+      document.getElementById('login').classList.remove('hidden');
+      document.getElementById('pw').value = '';
+    }
+  </script>
+</body>
+</html>
