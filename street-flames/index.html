@@ -12,58 +12,56 @@
       <div class="logo-placeholder">STREET<br>FLAMES</div>
       <h1>STREET FLAMES</h1>
       <p class="tagline">If You Book We Cook</p>
-      <p class="subtitle">Bold Flavor. Street Soul. Good Food. Real Flavor.</p>
-      <a href="#book" class="cta-btn">Book Your Event</a>
+      <p class="subtitle">Bold Flavor &bull; Street Soul &bull; Bay Area</p>
+      <a href="#book" class="cta-btn">Reserve Your Event</a>
     </div>
   </header>
 
   <section id="about" class="section">
-    <h2>Catering with Fire</h2>
-    <p>Street Flames brings bold, flame-kissed flavors to events across the Bay Area. From intimate gatherings to large parties, we set up and serve with soul. Pricing depends on how many people and the type of menu. Deposit 50% one week prior — balance due at setup.</p>
+    <h2>Flame-Kissed Catering</h2>
+    <p>Street Flames delivers bold, fire-grilled flavors for gatherings across the Bay Area. From intimate dinners to large celebrations, we bring the heat with soulful service and unforgettable taste. Every event is tailored — pricing varies by guest count and menu.</p>
+    <p>50% deposit one week prior. Balance due at setup.</p>
   </section>
 
   <section id="packages" class="section">
-    <h2>Sample Packages</h2>
-    <p style="text-align:center; margin-bottom:2rem;">Every event is different. Pricing varies by guest count, menu type, and setup needs. 50% deposit one week prior, balance due at setup.</p>
+    <h2>Our Offerings</h2>
+    <p>Pricing is confirmed after guest count and menu selection. Minimums may apply.</p>
     <div class="packages">
       <div class="package">
         <h3>Street Flame Express</h3>
         <p class="price">Varies</p>
-        <p>Drop-off or light setup. BBQ / street food platters. Ideal for 15–40 guests.</p>
+        <p>Drop-off or light setup. Signature BBQ and street food platters. Ideal for 15–40 guests.</p>
       </div>
       <div class="package">
         <h3>Full Flame Service</h3>
         <p class="price">Varies</p>
-        <p>On-site setup, flame-grilled service, staffing. Great for 30–100+ guests.</p>
+        <p>On-site flame-grilled cooking, full setup, and staffing. Perfect for 30–100+ guests.</p>
       </div>
       <div class="package">
         <h3>Custom Flame Event</h3>
         <p class="price">Custom Quote</p>
-        <p>Large parties, unique menus, or premium additions. We’ll build it with you.</p>
+        <p>Large-scale parties, unique menus, or premium additions. Designed with you.</p>
       </div>
     </div>
-    <p class="note">Final price confirmed after guest count + menu. Minimums may apply for smaller events.</p>
   </section>
 
   <section id="gallery" class="section">
-    <h2>Our Flame</h2>
+    <h2>From the Fire</h2>
     <div class="gallery">
-      <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop" alt="Grilled food" loading="lazy">
-      <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&auto=format&fit=crop" alt="Pizza from oven" loading="lazy">
-      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format&fit=crop" alt="Gourmet plate" loading="lazy">
-      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&auto=format&fit=crop" alt="Restaurant table" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop" alt="Grilled feast" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop" alt="Wood-fired pizza" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop" alt="Elegant plating" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&auto=format&fit=crop" alt="Dining atmosphere" loading="lazy">
     </div>
-    <p class="note">Add your own pictures via GitHub or replace these Unsplash links.</p>
   </section>
 
   <section id="book" class="section book-section">
-    <h2>Book Now</h2>
-    <p>Request your event date. 50% deposit one week prior, rest at setup. Pricing varies by guests and menu.</p>
+    <h2>Book Your Event</h2>
+    <p>Tell us about your gathering. We’ll confirm availability and details.</p>
     <div class="booking-card">
-      <h3>Street Flames Catering Event</h3>
-      <p>2-hour setup & service. Pricing depends on number of people and type of menu.</p>
+      <h3>Street Flames Catering</h3>
       <p class="phrase">If You Book We Cook</p>
-      <p class="small">50% deposit one week prior, balance due at setup.</p>
+      <p class="small">50% deposit one week prior &bull; Balance due at setup</p>
       <form id="inquiry" class="inquiry-form">
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Email" required>
@@ -74,9 +72,9 @@
           <option value="bbq">BBQ / Flame Grilled</option>
           <option value="street">Street Food Mix</option>
           <option value="custom">Custom Menu</option>
-          <option value="other">Other (describe below)</option>
+          <option value="other">Other</option>
         </select>
-        <textarea name="details" placeholder="Event details, menu ideas..." rows="3"></textarea>
+        <textarea name="details" placeholder="Event details, menu ideas, or questions..." rows="4"></textarea>
         <button type="submit" class="cta-btn">Request Booking</button>
       </form>
       <div id="form-message"></div>
@@ -85,7 +83,7 @@
 
   <footer>
     <p>Street Flames Catering &mdash; If You Book We Cook</p>
-    <p>Bay Area Apps &bull; <a href="admin.html">Admin</a> &bull; <a href="/">Main Site</a></p>
+    <p>Bay Area &bull; <a href="admin.html">Admin</a> &bull; <a href="/">Bay Area Apps</a></p>
   </footer>
 
   <script>
@@ -106,7 +104,7 @@
       localStorage.setItem('streetflames_requests', JSON.stringify(existing));
 
       const msg = document.getElementById('form-message');
-      msg.textContent = 'Request received! We\'ll confirm availability and send deposit details (50% one week prior).';
+      msg.textContent = 'Request received. We\'ll confirm availability and send deposit details.';
       msg.style.color = '#d4af37';
       form.reset();
     });
