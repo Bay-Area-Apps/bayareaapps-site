@@ -1,0 +1,32 @@
+name: Verify website and Apple apps
+on: [push, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  website:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci
+        working-directory: tests
+      - run: node tests/visits-schedule-helpers.test.cjs
+      - run: node --test business-backend/test.mjs
+  apple:
+    runs-on: macos-15
+    defaults:
+      run:
+        working-directory: apple-app
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: xcodegen generate
+      - run: swift test
+      - run: xcodebuild -project BayAreaApps.xcodeproj -scheme BayAreaAppsMac -destination 'platform=macOS' -derivedDataPath build/mac CODE_SIGNING_ALLOWED=NO build
+      - run: xcodebuild -project BayAreaApps.xcodeproj -scheme BayAreaAppsIOS -destination 'generic/platform=iOS Simulator' -derivedDataPath build/ios CODE_SIGNING_ALLOWED=NO build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Bay-Area-Apps-Mac-unsigned
+          path: apple-app/build/mac/Build/Products/Debug/Bay Area Apps.app
