@@ -1,0 +1,12 @@
+{
+  "name": "bayareaapps-studio",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-22",
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": {
+    "ACCESS_ISSUER": "https://bayareaapps-studio.cloudflareaccess.com",
+    "ACCESS_AUD": "7590f02fb93f8c6d074f25cb9679a7f3cac0302ef804a313512585724751d3ae"
+  },
+  "d1_databases": [{"binding":"DB","database_name":"bayareaapps-studio","database_id":"616b15af-f539-4b81-bf4d-708c66fd5a6d"}]
+}

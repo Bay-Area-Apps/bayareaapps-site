@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+.openai/
+.build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.build-artifacts/

@@ -97,7 +97,7 @@ struct SiteWebView {
             guard (error as NSError).code != NSURLErrorCancelled else { return }
             state.loading = false; state.error = error.localizedDescription
         }
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping @MainActor @Sendable (WKNavigationActionPolicy) -> Void) {
             guard let destination = navigationAction.request.url else { decisionHandler(.cancel); return }
             switch LinkPolicy.classify(destination) {
             case .website: decisionHandler(.allow)

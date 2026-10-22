@@ -1,0 +1,11 @@
+exclude:
+  - apple-app
+  - business-backend
+  - tests
+  - README.md
+  - WEBSITE_HANDOFF.md
+  - HELP_LINE_DEPLOYMENT.md
+  - WEBSITES.md
+  - DELIVERY.md
+  - scripts
+  - MARKETING.md

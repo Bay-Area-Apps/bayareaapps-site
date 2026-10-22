@@ -100,8 +100,8 @@ The catalog cache contains public descriptions only. SwiftData records contain p
 ## Verification at source handoff
 
 - Passed: XcodeGen YAML parse, asset JSON validation, entitlement plist parse, all 11 icon dimensions, and Bash syntax checks.
-- Swift/Xcode execution is unavailable in the Linux authoring environment; the Mac CI workflow must provide actual compile/test results.
-- Physical installation is not established by source generation or CI. No registered remote Mac was available at source handoff; final installation requires access to the owner's Mac and paired phone.
+- Swift/Xcode execution is unavailable in the Linux authoring environment. The attempted GitHub Actions run did not start because GitHub reported an account billing lock. There are no compiler logs or executed Swift test results; source review and static checks are the only completed verification.
+- Neither the iPhone app nor the Mac app has been installed. No registered remote Mac was available at source handoff; compiling, running host-side tests, and final installation require access to the owner's Mac and paired phone. No phone tests were run.
 - Owner login and payment-provider eligibility are owned by the website and must be verified there. This app does not claim those accounts are already connected.
 
 ## Source layout

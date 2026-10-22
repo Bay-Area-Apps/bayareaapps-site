@@ -1,0 +1,70 @@
+{
+  "projects": [
+    {
+      "id": "paws-help",
+      "name": "Paws & Whiskers Help Line",
+      "category": "Website",
+      "summary": "Everyday dog-and-cat care education, with private messages and arranged phone support. A real service with a straightforward way to ask for help.",
+      "status": "available",
+      "url": "https://bayareaapps.com/paws-whiskers/"
+    },
+    {
+      "id": "street-flames",
+      "name": "Street Flames Catering",
+      "category": "Website",
+      "summary": "Flame-kissed food for Bay Area gatherings. Explore catering options and request an event based on your guest count and menu.",
+      "status": "available",
+      "url": "https://bayareaapps.com/street-flames/"
+    },
+    {
+      "id": "paws-visits",
+      "name": "Paws & Whiskers Visits",
+      "category": "Website",
+      "summary": "The home-visit service is temporarily unavailable. Contact Bay Area Apps about an existing visit; new bookings are paused.",
+      "status": "paused",
+      "url": "https://bayareaapps.com/petassist-local/"
+    },
+    {
+      "id": "the-block",
+      "name": "The Block",
+      "category": "App",
+      "summary": "A community project exploring conversations, creators, and discovery of Black-owned businesses. Public app availability will be announced separately.",
+      "status": "development"
+    },
+    {
+      "id": "youtube-ai",
+      "name": "YouTube AI",
+      "category": "App",
+      "summary": "A creator project exploring research, video preparation, and review before publishing. Presented here as a development preview.",
+      "status": "development"
+    },
+    {
+      "id": "creatorworker",
+      "name": "CreatorWorker",
+      "category": "App",
+      "summary": "A project exploring assisted content workflows and business tasks with an owner review process. This listing is a development preview.",
+      "status": "development"
+    },
+    {
+      "id": "bumper-cars",
+      "name": "Bumper Cars",
+      "category": "Game",
+      "summary": "An arcade game project built around driving, arenas, and playful competition. A look at the game-development side of the studio.",
+      "status": "development"
+    },
+    {
+      "id": "calculators",
+      "name": "Calculators & Shortcuts",
+      "category": "Tool",
+      "summary": "Focused tools and Apple Shortcuts for repeatable calculations and everyday workflows. Individual tools will be listed as they become available.",
+      "status": "development"
+    },
+    {
+      "id": "lumen-loom",
+      "name": "Lumen & Loom",
+      "category": "Website",
+      "summary": "A digital-product project centered on planners, templates, and useful downloadable resources. Store details will be linked when verified.",
+      "status": "development"
+    }
+  ]
+}
