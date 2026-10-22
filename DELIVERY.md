@@ -24,8 +24,10 @@ Resume installation in the connected Mac environment, build both schemes, run au
 
 ## Verification
 
-Backend: ten local Node tests pass; live synthetic inquiry, private portal, messages, proposal-version approval, access redirect and cleanup verified. No customer data or payment was used. See business-backend/README.md.
+Backend: twelve local Node tests pass; live synthetic inquiry, private portal, messages, proposal-version approval, access redirect and cleanup verified. No customer data or payment was used. See business-backend/README.md.
 
 The existing visits helper regression suite passes. The older visits DOM booking suite currently fails against the deliberately paused public Visits page because its booking controls are absent; those existing pages were not changed by this redesign.
 
 Website: nine focused tests pass, plus browser verification of navigation, category filtering, required-field validation, and private client entry. Source published to the existing repository; hosting deployment is checked separately.
+
+GitHub Pages deployment 39864209318 completed successfully. Live homepage and catalog verified. Browser testing found and corrected generated inline JavaScript escaping; backend tests now compile and execute both generated client/owner views.

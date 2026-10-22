@@ -26,8 +26,10 @@ Deployment uses schema.sql, worker.mjs, ui.mjs and wrangler.jsonc. Deployed via 
 
 ## Verification
 
-`node --test business-backend/test.mjs` from repo root, Node 24 built-in SQLite. Ten tests passed: durable lifecycle, hashing, duplicates, origins/auth, payment URLs, streaming limit, real RSA JWT signature/claims, consent/honeypot, rate limit and private page headers/no tracking.
+`node --test business-backend/test.mjs` from repo root, Node 24 built-in SQLite. Twelve tests passed: durable lifecycle, hashing, duplicates, origins/auth, payment URLs, streaming limit, real RSA JWT signature/claims, consent/honeypot, rate limit and private page headers/no tracking.
 
 Live: health 200; client UI 200; owner UI 302 to Access login; synthetic intake 201, project 200, message 200, stale approval 409, current approval 200 and persisted version 2. Synthetic proposal seeded via authenticated D1 solely for check; synthetic inquiry/messages deleted, remaining count zero. No email codes requested or payment attempted. Interactive owner OTP login/post-login UI still require owner acceptance testing; signed-token tests cover server verifier.
 
 Owner recovery: POST `/admin/api/inquiries/:id/access-link` with `{identityVerified:true}` requires the same Access JWT and same-origin protections as other owner mutations. Returns `{portalUrl,oldLinkRevoked:true}`. The new random token replaces the stored hash; old client links immediately return 401. UI requires explicit identity-verification/revocation confirmation and provides a copy-link action. Tests cover unauthenticated refusal, missing confirmation refusal, and old/new token validity.
+
+Generated client and owner inline JavaScript is compiled and executed with project fixtures in JSDOM. Install repository tests dependencies first with `npm ci --prefix tests`; smoke tests use that existing jsdom dependency. A template escape regression was fixed using String.raw so newline escapes survive into browser JavaScript.
