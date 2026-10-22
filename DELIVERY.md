@@ -31,3 +31,7 @@ The existing visits helper regression suite passes. The older visits DOM booking
 Website: nine focused tests pass, plus browser verification of navigation, category filtering, required-field validation, and private client entry. Source published to the existing repository; hosting deployment is checked separately.
 
 GitHub Pages deployment 39864209318 completed successfully. Live homepage and catalog verified. Browser testing found and corrected generated inline JavaScript escaping; backend tests now compile and execute both generated client/owner views.
+
+## Installable web app alternative
+
+The installable web app at https://bayareaapps.com/app/ provides the catalog, local favorites/search/filter, public offline app shell/catalog, and browser links to owner/client workspaces. It requires no native compilation, App Store, or signing. The final Home Screen/Dock Add action must happen on the user device; this cloud session cannot perform it. This is distinct from the still-unverified native Swift apps. Four focused app tests plus nine studio regression tests pass; browser favorites persistence verified. No physical-phone tests performed.
