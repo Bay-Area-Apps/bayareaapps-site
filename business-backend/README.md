@@ -2,7 +2,7 @@
 
 Deployed 2026-10-22: https://bayareaapps-studio.bayareaapps-paws.workers.dev
 
-Owner workspace `/admin`: Cloudflare Access email code restricted to info@bayareaapps.com. Worker independently verifies RSA signature, issuer, audience, expiry, issue/not-before times and exact owner email on every owner route. No password/bootstrap secret in source. Client portal `/client/#token=...`: save returned private link. Random 256-bit token is stored only as SHA-256 in D1. Anyone possessing the private link can access the project. No expiry or automated link recovery; contact owner if lost/compromised. Portal removes token from address bar into session storage and offers a save-link action. No ads, analytics, third-party scripts, automatic emails or email notifications. Responses no-store/no-referrer.
+Owner workspace `/admin`: Cloudflare Access email code restricted to info@bayareaapps.com. Worker independently verifies RSA signature, issuer, audience, expiry, issue/not-before times and exact owner email on every owner route. No password/bootstrap secret in source. Client portal `/client/#token=...`: save returned private link. Random 256-bit token is stored only as SHA-256 in D1. Anyone possessing the private link can access the project. No expiry; contact owner if lost/compromised. After verifying client identity, the owner can replace a lost link in the workspace, immediately revoking the old link. The new link is displayed once for secure manual sharing; no email is sent. Portal removes token from address bar into session storage and offers a save-link action. No ads, analytics, third-party scripts, automatic emails or email notifications. Responses no-store/no-referrer.
 
 ## API
 
@@ -26,6 +26,8 @@ Deployment uses schema.sql, worker.mjs, ui.mjs and wrangler.jsonc. Deployed via 
 
 ## Verification
 
-`node --test business-backend/test.mjs` from repo root, Node 24 built-in SQLite. Nine tests passed: durable lifecycle, hashing, duplicates, origins/auth, payment URLs, streaming limit, real RSA JWT signature/claims, consent/honeypot, rate limit and private page headers/no tracking.
+`node --test business-backend/test.mjs` from repo root, Node 24 built-in SQLite. Ten tests passed: durable lifecycle, hashing, duplicates, origins/auth, payment URLs, streaming limit, real RSA JWT signature/claims, consent/honeypot, rate limit and private page headers/no tracking.
 
 Live: health 200; client UI 200; owner UI 302 to Access login; synthetic intake 201, project 200, message 200, stale approval 409, current approval 200 and persisted version 2. Synthetic proposal seeded via authenticated D1 solely for check; synthetic inquiry/messages deleted, remaining count zero. No email codes requested or payment attempted. Interactive owner OTP login/post-login UI still require owner acceptance testing; signed-token tests cover server verifier.
+
+Owner recovery: POST `/admin/api/inquiries/:id/access-link` with `{identityVerified:true}` requires the same Access JWT and same-origin protections as other owner mutations. Returns `{portalUrl,oldLinkRevoked:true}`. The new random token replaces the stored hash; old client links immediately return 401. UI requires explicit identity-verification/revocation confirmation and provides a copy-link action. Tests cover unauthenticated refusal, missing confirmation refusal, and old/new token validity.
