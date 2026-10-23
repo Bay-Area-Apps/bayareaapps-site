@@ -13,7 +13,7 @@ jobs:
       - run: npm ci
         working-directory: tests
       - run: node tests/visits-schedule-helpers.test.cjs
-      - run: node --test tests/studio.test.cjs
+      - run: node --test tests/studio.test.cjs tests/app-brief-builder.test.cjs
       - run: node --test business-backend/test.mjs
   apple:
     runs-on: macos-15
