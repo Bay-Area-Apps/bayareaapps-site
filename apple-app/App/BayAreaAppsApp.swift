@@ -8,27 +8,21 @@ import BayAreaCore
 struct BayAreaAppsApp: App {
     @State private var bootstrap = AppBootstrap()
     var body: some Scene {
+        #if os(macOS)
+        Window("Bay Area Apps", id: "studio") {
+            appContent.frame(minWidth: 720, minHeight: 580)
+        }
+        #else
         WindowGroup {
-            Group {
-                if let container = bootstrap.container, let catalog = bootstrap.catalog {
-                    StudioRootView(catalog: catalog)
-                        .modelContainer(container)
-                } else {
-                    ContentUnavailableView {
-                        Label("Unable to open local storage", systemImage: "externaldrive.badge.exclamationmark")
-                    } description: {
-                        Text(bootstrap.error ?? "Please try opening the app again.")
-                    } actions: {
-                        Button("Try again") { bootstrap.prepare() }
-                    }
-                }
-            }
+            appContent
+        }
+        #endif
+    }
+
+    private var appContent: some View {
+        StudioRootView(bootstrap: bootstrap)
             .preferredColorScheme(.dark)
             .tint(Theme.red)
-            #if os(macOS)
-            .frame(minWidth: 720, minHeight: 580)
-            #endif
-        }
     }
 }
 
@@ -50,7 +44,7 @@ final class AppBootstrap {
             self.catalog = CatalogViewModel(service: service)
             self.error = nil
         } catch {
-            self.error = "Your saved projects could not be opened. Check available device storage and try again. \(error.localizedDescription)"
+            self.error = "Your portfolio’s local storage could not be opened. Check available device storage and try again. \(error.localizedDescription)"
         }
     }
 }

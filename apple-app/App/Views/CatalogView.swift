@@ -12,19 +12,20 @@ struct CatalogView: View {
     @State private var query = ""
     @State private var category: Project.Category?
     @State private var storageError: String?
+    @State private var showFavorites = false
 
     private var favoriteIDs: Set<String> { Set(favorites.map(\.projectID)) }
     private var visibleProjects: [Project] {
-        model.snapshot?.catalog.filtered(category: category, query: query, favorites: savedOnly ? favoriteIDs : nil) ?? []
+        model.snapshot?.catalog.filtered(category: category, query: query, favorites: savedOnly || showFavorites ? favoriteIDs : nil) ?? []
     }
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 BrandMark()
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(savedOnly ? "Your saved projects." : "Ideas made useful.")
+                    Text(savedOnly ? "Your pinned projects." : "Made by Bay Area Apps.")
                         .font(.largeTitle.bold()).foregroundStyle(Theme.text)
-                    Text(savedOnly ? "Keep the projects you want to revisit close by. Favorites stay on this device." : "Explore our apps, websites, games, and practical tools.")
+                    Text(savedOnly ? "Projects you’ve pinned on this device." : "Your studio’s public apps, websites, games, and tools. Open a project or share it with a prospective client.")
                         .foregroundStyle(.secondary)
                 }
                 Picker("Project category", selection: $category) {
@@ -34,6 +35,7 @@ struct CatalogView: View {
                     }
                 }
                 .pickerStyle(.menu)
+                Toggle("Pinned projects only", isOn: $showFavorites)
 
                 if model.isLoading && model.snapshot == nil {
                     ProgressView("Loading projects…").frame(maxWidth: .infinity).padding(32)
@@ -54,7 +56,7 @@ struct CatalogView: View {
                         .background(Theme.surface, in: RoundedRectangle(cornerRadius: 16))
                     }
                     if visibleProjects.isEmpty {
-                        ContentUnavailableView(savedOnly ? "No saved projects match" : "No projects match", systemImage: savedOnly ? "bookmark" : "magnifyingglass", description: Text(savedOnly ? "Save a project from Explore, or change your search and filter." : "Try another search or category."))
+                        ContentUnavailableView(showFavorites || savedOnly ? "No pinned projects match" : "No projects match", systemImage: "magnifyingglass", description: Text("Change your search or category, or turn off the pinned filter."))
                     }
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 18)], alignment: .leading, spacing: 18) {
                         ForEach(visibleProjects) { project in
@@ -73,7 +75,7 @@ struct CatalogView: View {
             .frame(maxWidth: .infinity)
         }
         .background(Theme.background)
-        .navigationTitle(savedOnly ? "Saved" : "Explore")
+        .navigationTitle("My portfolio")
         .searchable(text: $query, prompt: "Search projects")
         .toolbar {
             Button {

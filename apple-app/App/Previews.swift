@@ -17,7 +17,7 @@ private actor PreviewCatalogService: CatalogServing {
 }
 
 #Preview("Native studio — preview data") {
-    StudioRootView(catalog: CatalogViewModel(service: PreviewCatalogService()))
+    CatalogView(model: CatalogViewModel(service: PreviewCatalogService()), coordinator: AppCoordinator(), savedOnly: false)
         .modelContainer(for: Favorite.self, inMemory: true)
         .preferredColorScheme(.dark)
         .tint(Theme.red)

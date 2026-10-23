@@ -26,14 +26,18 @@ function showFormNotice(message) {
 }
 function clearFormNotice() { byID("formNotice").hidden = true; byID("formNotice").textContent = ""; }
 function isTrustedStatusURL(value) {
-  try { var url = new URL(value); return url.origin === "https://vet-helpline-development.dkjmmz6whh.workers.dev" && url.pathname === "/pay" && !url.username && !url.password && !url.hash; }
+  try { var url = new URL(value); return url.origin === "https://vet-helpline-development.bayareaapps-paws.workers.dev" && url.pathname === "/pay" && !url.username && !url.password && !url.hash; }
   catch (_) { return false; }
 }
 function canonicalConversationURL(value) {
   var url = new URL(value);
   var legacy = url.origin === "https://paws-whiskers-care-line.dkjmmz6whh.workers.dev" && url.pathname === "/conversation.html";
   var company = url.origin === "https://bayareaapps.com" && url.pathname === "/paws-whiskers/conversation.html";
-  if ((!legacy && !company) || url.search || url.username || url.password || !/^#thread=[a-f0-9]{32}\.[a-f0-9]{64}$/.test(url.hash)) throw new Error("Your private conversation could not be verified.");
+  var current = url.origin === "https://paws-whiskers-care-line.bayareaapps-paws.workers.dev" && url.pathname === "/conversation.html";
+  if ((!legacy && !company && !current) || url.search || url.username || url.password || !/^#thread=[a-f0-9]{32}\.[a-f0-9]{64}$/.test(url.hash)) throw new Error("Your private conversation could not be verified.");
+  // Each relay has its own private conversations. Keep new receipts with the
+  // current owner app; the company conversation page still serves legacy links.
+  if (current) return url.href;
   return "https://bayareaapps.com/paws-whiskers/conversation.html" + url.hash;
 }
 function updateServiceGuidance(service) {
@@ -183,7 +187,7 @@ byID("attachments").addEventListener("change", function () {
 byID("phone").addEventListener("input", function () { byID("phone").setCustomValidity(""); });
 
   // Existing intake relay. Pricing and availability are authoritative on the server.
-  var WORKER_URL = "https://vet-helpline-development.dkjmmz6whh.workers.dev";
+  var WORKER_URL = "https://vet-helpline-development.bayareaapps-paws.workers.dev";
   var HELPLINE_EMAIL = "info@bayareaapps.com";
 
   document.getElementById("requestedService").addEventListener("change", function (event) {

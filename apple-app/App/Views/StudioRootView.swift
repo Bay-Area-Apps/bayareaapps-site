@@ -2,19 +2,31 @@ import SwiftUI
 import BayAreaCore
 
 struct StudioRootView: View {
-    @State var catalog: CatalogViewModel
+    @Bindable var bootstrap: AppBootstrap
     @State private var coordinator = AppCoordinator()
+    @State private var ownerSession = OwnerWorkspaceSession()
     @Environment(\.openURL) private var openURL
     var body: some View {
         TabView {
-            NavigationStack { CatalogView(model: catalog, coordinator: coordinator, savedOnly: false) }
-                .tabItem { Label("Explore", systemImage: "square.grid.2x2") }
-            NavigationStack { CatalogView(model: catalog, coordinator: coordinator, savedOnly: true) }
-                .tabItem { Label("Saved", systemImage: "bookmark") }
-            NavigationStack { ServicesView(coordinator: coordinator) }
-                .tabItem { Label("Services", systemImage: "hammer") }
-            NavigationStack { WorkspaceView() }
-                .tabItem { Label("Workspace", systemImage: "briefcase") }
+            NavigationStack { OwnerStudioView(session: ownerSession) }
+                .tabItem { Label("Studio", systemImage: "briefcase.fill") }
+            NavigationStack {
+                if let container = bootstrap.container, let catalog = bootstrap.catalog {
+                    CatalogView(model: catalog, coordinator: coordinator, savedOnly: false)
+                        .modelContainer(container)
+                } else {
+                    ContentUnavailableView {
+                        Label("Portfolio storage unavailable", systemImage: "externaldrive.badge.exclamationmark")
+                    } description: {
+                        Text(bootstrap.error ?? "Please try again.")
+                    } actions: {
+                        Button("Try again") { bootstrap.prepare() }
+                    }
+                }
+            }
+            .tabItem { Label("My portfolio", systemImage: "square.grid.2x2") }
+            NavigationStack { BusinessGuideView(coordinator: coordinator) }
+                .tabItem { Label("Business", systemImage: "list.clipboard") }
         }
         .sheet(item: $coordinator.browser) { destination in
             WebsiteBrowser(url: destination.url)

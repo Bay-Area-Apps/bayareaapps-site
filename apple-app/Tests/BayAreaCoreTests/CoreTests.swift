@@ -36,6 +36,36 @@ func privateAndExternalLinksLeaveEmbeddedBrowser(_ input: String) throws {
     #expect(LinkPolicy.classify(try #require(URL(string: "https://bayareaapps.com/projects/"))) == .website)
 }
 
+@Test(arguments: [
+    "https://bayareaapps-studio.bayareaapps-paws.workers.dev/admin#view=overview",
+    "https://bayareaapps-studio.bayareaapps-paws.workers.dev/cdn-cgi/access/authorized",
+    "https://bayareaapps-studio.cloudflareaccess.com/cdn-cgi/access/login"
+])
+func ownerSessionKeepsAuthenticationOnTrustedHosts(_ input: String) throws {
+    #expect(OwnerWorkspace.classify(try #require(URL(string: input))) == .workspace)
+}
+
+@Test(arguments: [
+    "https://bayareaapps-studio.cloudflareaccess.com.evil.example/login",
+    "https://bayareaapps-studio.bayareaapps-paws.workers.dev.evil.example/admin",
+    "https://www.paypal.com/invoice/one",
+    "https://bayareaapps.com/",
+    "mailto:info@bayareaapps.com"
+])
+func ownerSessionSendsPublicAndPaymentLinksOutside(_ input: String) throws {
+    #expect(OwnerWorkspace.classify(try #require(URL(string: input))) == .external)
+}
+
+@Test(arguments: [
+    "http://bayareaapps-studio.bayareaapps-paws.workers.dev/admin",
+    "https://user:password@bayareaapps-studio.cloudflareaccess.com/login",
+    "https://bayareaapps-studio.bayareaapps-paws.workers.dev:8080/admin",
+    "javascript:alert(1)", "file:///etc/passwd"
+])
+func ownerSessionBlocksUnsafeAddresses(_ input: String) throws {
+    #expect(OwnerWorkspace.classify(try #require(URL(string: input))) == .blocked)
+}
+
 @Test func cachedCatalogSurvivesServiceRecreation() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
