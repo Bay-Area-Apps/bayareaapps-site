@@ -1,10 +1,10 @@
 const CACHE_PREFIX = "paws-whiskers-help-line-";
-const CACHE = CACHE_PREFIX + "bayarea-v11";
+const CACHE = CACHE_PREFIX + "customer-v1";
 const ASSETS = [
   "./",
   "./index.html",
-  "./website.css?v=20261017.1",
-  "./website.js?v=20261017.3",
+  "./website.css?v=20261025.customer1",
+  "./website.js?v=20261025.customer1",
   "./conversation.css?v=20261017.2",
   "./assets/help-line-pets.png",
   "./assets/help-line-pets-illustration.png",

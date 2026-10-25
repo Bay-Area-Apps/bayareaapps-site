@@ -10,14 +10,14 @@ var serviceValues = {
   quick: "Quick Question — Private Message · $10",
   detailed: "Detailed Guidance — Private Message · $15",
   phone: "Phone Support · $25",
-  free: "Free Community Support — Private Message"
+  free: "Free Community Support — Private Message",
+  freePhone: "Free Community Support — Phone"
 };
 // Keep stored service names stable; present the current support names to clients.
 function serviceDisplayName(service) {
   return String(service || "")
     .replace(/^Quick Question(?= —| ·|$)/, "Focused Guidance")
-    .replace(/^Detailed Guidance(?= —| ·|$)/, "In-Depth Support")
-    .replace(/^Free Community Support(?= —| ·|$)/, "Free Advice");
+    .replace(/^Detailed Guidance(?= —| ·|$)/, "In-Depth Support");
 }
 function byID(id) { return document.getElementById(id); }
 function showFormNotice(message) {
@@ -26,20 +26,25 @@ function showFormNotice(message) {
 }
 function clearFormNotice() { byID("formNotice").hidden = true; byID("formNotice").textContent = ""; }
 function isTrustedStatusURL(value) {
-  try { var url = new URL(value); return url.origin === "https://vet-helpline-development.dkjmmz6whh.workers.dev" && url.pathname === "/pay" && !url.username && !url.password && !url.hash; }
+  try { var url = new URL(value); return url.origin === "https://vet-helpline-development.bayareaapps-paws.workers.dev" && url.pathname === "/pay" && !url.username && !url.password && !url.hash; }
   catch (_) { return false; }
 }
 function canonicalConversationURL(value) {
   var url = new URL(value);
-  var legacy = url.origin === "https://paws-whiskers-care-line.dkjmmz6whh.workers.dev" && url.pathname === "/conversation.html";
-  var company = url.origin === "https://bayareaapps.com" && url.pathname === "/paws-whiskers/conversation.html";
-  if ((!legacy && !company) || url.search || url.username || url.password || !/^#thread=[a-f0-9]{32}\.[a-f0-9]{64}$/.test(url.hash)) throw new Error("Your private conversation could not be verified.");
-  return "https://bayareaapps.com/paws-whiskers/conversation.html" + url.hash;
+  if (url.origin !== "https://paws-whiskers-care-line.bayareaapps-paws.workers.dev" || url.pathname !== "/conversation.html" || url.search || url.username || url.password || url.port || !/^#thread=[a-f0-9]{32}\.[a-f0-9]{64}$/.test(url.hash)) throw new Error("Your private conversation could not be verified.");
+  return url.href;
 }
 function updateServiceGuidance(service) {
   var free = isFreeSupport(service), phone = replyMethodFromService(service) === "Phone call";
   byID("selectedServiceName").textContent = serviceDisplayName(service).replace(" — Private Message", "") || "Choose your support option";
-  byID("serviceNote").textContent = free ? "Free support. No payment or explanation is required." : "You won’t pay until I confirm availability.";
+  byID("serviceNote").textContent = free ? "Submit without paying. Free help depends on availability and circumstances; the conversation opens if accepted." : "I confirm availability first. Payment is required before guidance begins.";
+  byID("callScheduleFields").hidden = !phone;
+  byID("requestedCallAt").required = phone;
+  byID("requestedCallAt").disabled = !phone;
+  byID("requestedCallAt").setCustomValidity("");
+  byID("requestedCallOccurrence").disabled = true;
+  byID("requestedCallOccurrence").required = false;
+  if(phone) updatePacificChoice(byID("requestedCallAt"),byID("requestedCallOccurrence"),byID("callTimeOccurrence"));
   byID("phone").required = phone;
   byID("phone").setCustomValidity("");
   byID("phoneOptional").textContent = phone ? "(required for phone support)" : "(optional)";
@@ -91,6 +96,10 @@ function fileValidationMessage() {
 function validateStep(index, showError) {
   var pane = document.querySelector('[data-pane="' + index + '"]');
   if (index === 2) {
+    if (replyMethodFromService(byID("requestedService").value) === "Phone call") {
+      try { selectedCallbackTime(); byID("requestedCallAt").setCustomValidity(""); }
+      catch(error) { byID("requestedCallAt").setCustomValidity(error.message); }
+    }
     var phone = byID("phone");
     phone.setCustomValidity(phone.required && phone.value.replace(/\D/g, "").length < 7 ? "Please enter a phone number with at least 7 digits." : "");
   }
@@ -156,7 +165,7 @@ function reviewGroup(title, entries) {
 function renderReview() {
   var review = byID("reviewSummary"); review.replaceChildren();
   var value = function (id) { return byID(id).value.trim(); };
-  review.append(reviewGroup("Support option", [["Service", serviceDisplayName(value("requestedService"))], ["Payment", isFreeSupport(value("requestedService")) ? "No payment required" : "Only after availability approval"]]));
+  review.append(reviewGroup("Support option", [["Service", serviceDisplayName(value("requestedService"))], ["Payment", isFreeSupport(value("requestedService")) ? "No payment required" : "After approval, before guidance"]]));
   review.append(reviewGroup("Your pet", [["Name", value("petName")], ["Species", value("species")], ["Age", value("age")], ["Breed", value("breed")], ["Sex", value("sex")], ["Spayed / neutered", value("reproductiveStatus")], ["Weight", value("weight")]]));
   review.append(reviewGroup("Your concern", [["Topic", value("category")], ["Details", value("question")], ["Urgency", value("urgency")], ["Started", value("symptomOnset")], ["Changes", value("symptomTrend")], ["Eating", value("appetite")], ["Drinking", value("drinking")], ["Urination", value("urination")], ["Stool", value("stool")], ["Energy", value("energy")], ["Vomiting", value("vomiting")], ["Medical history", value("medicalHistory")], ["Medications", value("currentMedications")], ["Already tried", value("actionsTaken")], ["Files", Array.from(byID("attachments").files || []).map(function (file) { return file.name; }).join(", ") || "None"]]));
   review.append(reviewGroup("Your details", [["Name", value("name")], ["Email", value("email")], ["Phone", value("phone")]]));
@@ -183,7 +192,7 @@ byID("attachments").addEventListener("change", function () {
 byID("phone").addEventListener("input", function () { byID("phone").setCustomValidity(""); });
 
   // Existing intake relay. Pricing and availability are authoritative on the server.
-  var WORKER_URL = "https://vet-helpline-development.dkjmmz6whh.workers.dev";
+  var WORKER_URL = "https://vet-helpline-development.bayareaapps-paws.workers.dev";
   var HELPLINE_EMAIL = "info@bayareaapps.com";
 
   document.getElementById("requestedService").addEventListener("change", function (event) {
@@ -235,6 +244,10 @@ byID("phone").addEventListener("input", function () { byID("phone").setCustomVal
       acceptedCommunicationPolicy: document.getElementById("communicationAck").checked ? "yes" : "no",
       website: document.getElementById("website").value // honeypot
     };
+    if (payload.preferredReply === "Phone call") {
+      try { payload.requestedCallAt = selectedCallbackTime(); payload.requestedCallTimeZone = "America/Los_Angeles"; }
+      catch(error) { showFormNotice(error.message); return; }
+    }
     var files = Array.prototype.slice.call(document.getElementById("attachments").files || []);
     payload.attachmentSummary = files.length
       ? files.map(function (file) {
@@ -433,6 +446,7 @@ byID("phone").addEventListener("input", function () { byID("phone").setCustomVal
   var conversationAccess = crypto.randomUUID().replaceAll("-", "") + crypto.randomUUID().replaceAll("-", "");
 
   function replyMethodFromService(service) {
+    if (service === "Free Community Support — Phone") return "Phone call";
     if (service.toLowerCase().indexOf("text") !== -1) return "Text message";
     if (service.indexOf("Phone") === 0) return "Phone call";
     return service.indexOf("Private Message") !== -1 ? "Private website conversation" : "Email";
@@ -450,3 +464,41 @@ window.addEventListener("hashchange", function () {
   if (location.hash === "#askSection") openIntake();
   if (location.hash === "#questions") byID("questions").showModal();
 });
+
+function pacificCandidates(value) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(value || "");
+  if (!match) return [];
+  const parts = match.slice(1).map(Number), wall = Date.UTC(parts[0], parts[1] - 1, parts[2], parts[3], parts[4]);
+  const check = new Date(wall);
+  if (check.getUTCFullYear() !== parts[0] || check.getUTCMonth() + 1 !== parts[1] || check.getUTCDate() !== parts[2] || parts[3] > 23 || parts[4] > 59) return [];
+  const formatter = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+  return [7, 8].map(offset => new Date(wall + offset * 3600000)).filter(date => {
+    const p = Object.fromEntries(formatter.formatToParts(date).map(part => [part.type, part.value]));
+    return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}` === value;
+  }).map(date => date.toISOString());
+}
+function updatePacificChoice(input, select, wrapper) {
+  const candidates = pacificCandidates(input.value), old = select.value;
+  select.replaceChildren(new Option("Choose which occurrence…", ""));
+  candidates.forEach((iso, index) => select.add(new Option((index === 0 ? "First occurrence: " : "Second occurrence: ") + new Intl.DateTimeFormat("en-US", {timeZone:"America/Los_Angeles",hour:"numeric",minute:"2-digit",timeZoneName:"short"}).format(new Date(iso)), iso)));
+  if (candidates.includes(old)) select.value = old;
+  wrapper.hidden = candidates.length !== 2;
+  select.required = candidates.length === 2;
+  select.disabled = candidates.length !== 2;
+  input.setCustomValidity(input.value && candidates.length === 0 ? "This time does not exist in Pacific time. Choose another time." : "");
+}
+function selectedPacificTime(input, select) {
+  const candidates = pacificCandidates(input.value);
+  if (!candidates.length) throw new Error("Choose a valid Pacific date and time. During the spring clock change, some times do not exist.");
+  const iso = candidates.length === 1 ? candidates[0] : (candidates.includes(select.value) ? select.value : "");
+  if (!iso) throw new Error("This time occurs twice when clocks change. Choose the first or second occurrence.");
+  if (Date.parse(iso) <= Date.now()) throw new Error("Choose a future date and time in Pacific time.");
+  return iso;
+}
+
+function selectedCallbackTime() {
+ const iso=selectedPacificTime(byID("requestedCallAt"),byID("requestedCallOccurrence"));
+ if(Date.parse(iso)>Date.now()+4*3600000) throw new Error("Choose a callback time in the next few hours (up to 4 hours). Availability must be confirmed before payment.");
+ return iso;
+}
+byID("requestedCallAt").addEventListener("input",function(){ updatePacificChoice(this,byID("requestedCallOccurrence"),byID("callTimeOccurrence")); });

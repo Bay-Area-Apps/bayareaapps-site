@@ -22,3 +22,9 @@ h1,h2,h3{font-weight:500}.brand{font-weight:500}.hero h1{font-size:clamp(48px,5.
 
 /* Dark system controls keep the same legibility through focus and autofill. */
 .field input:disabled,.field select:disabled,.field textarea:disabled{background:var(--elevated);color:var(--muted);opacity:1}.field input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000px var(--canvas) inset;caret-color:var(--ink)}.field input[aria-invalid=true],.field select[aria-invalid=true],.field textarea[aria-invalid=true]{border-color:var(--warning-text)}::selection{background:var(--sage-accent);color:var(--canvas)}
+
+/* Customer app and paid support menu. */
+.support-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.app-preview{padding-block:36px}.app-preview h2{font-size:36px}.app-preview p{max-width:760px;color:var(--muted)}
+@media(max-width:900px){.support-grid{grid-template-columns:1fr}}
+
+#callScheduleFields{margin-top:24px}#callScheduleFields h3{margin:0 0 14px}#callScheduleFields p{margin-top:12px;font-size:14px;color:var(--muted)}
