@@ -7,8 +7,8 @@ if (window.location.hostname === "jmal9767.github.io") {
 var currentStep = 0;
 var submissionPending = false;
 var serviceValues = {
-  quick: "Quick Question — Private Message · $10",
-  detailed: "Detailed Guidance — Private Message · $15",
+  quick: "Pet Concern — Private Message · $25",
+  detailed: "Pet Concern — Private Message · $25",
   phone: "Phone Support · $25",
   free: "Free Community Support — Private Message",
   freePhone: "Free Community Support — Phone"
@@ -16,7 +16,7 @@ var serviceValues = {
 // Keep stored service names stable; present the current support names to clients.
 function serviceDisplayName(service) {
   return String(service || "")
-    .replace(/^Quick Question(?= —| ·|$)/, "Focused Guidance")
+    .replace(/^Pet Concern(?= —| ·|$)/, "Pet Concern Conversation")
     .replace(/^Detailed Guidance(?= —| ·|$)/, "In-Depth Support");
 }
 function byID(id) { return document.getElementById(id); }
