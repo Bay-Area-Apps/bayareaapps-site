@@ -1,0 +1,57 @@
+BAY AREA APPS — FIRST VERSION PLANNING WORKSHEET
+https://bayareaapps.com/resources/first-app-brief/
+Updated October 28, 2026
+
+Use general project details. Leave out passwords, private customer records,
+payment-card numbers, and credentials. This is a planning aid, not a quote.
+
+1. AUDIENCE AND OUTCOME
+Who uses the first version?
+What one task should they complete?
+How does that task work today, and what should improve?
+
+2. THE JOURNEY
+Entry point:
+Information needed:
+Action the customer takes:
+What proves it was saved:
+Action the business takes:
+What the customer sees next:
+
+3. FIRST VERSION / LATER
+Required to complete the journey:
+Explicitly excluded from this version:
+Decisions still open (owner and target date for each):
+
+4. ACCESS AND DATA
+Who can view each record?
+Who can change it?
+How will a user recover access?
+What is retained, for how long, and who handles deletion requests?
+
+5. ACCEPTANCE CHECKS
+For each check, record: situation, expected behavior, actual result,
+evidence reference, pass/fail, and who will fix any failure.
+[ ] Complete the main journey from customer request to business response.
+[ ] Retry after a connection interruption without losing or duplicating work.
+[ ] Keep two independent customers' records separate.
+[ ] Show honest pending, confirmed, declined, and failed states.
+[ ] Associate any payment with the correct approved proposal version.
+[ ] Test the supported small-screen and desktop layouts.
+[ ] Recover access through the agreed support process.
+
+6. HANDOFF
+Domain and service account owners:
+Repository and source access:
+Publishing instructions:
+Backup, restore, and export procedure:
+Recurring services and who pays:
+Known limitations:
+Support period and defect reporting route:
+
+7. REVIEW RECORD
+Proposal version:
+Reviewer:
+Review date:
+Accepted checks:
+Unresolved checks and next steps:
