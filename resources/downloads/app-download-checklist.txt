@@ -1,0 +1,29 @@
+APP DOWNLOAD LINK CHECKLIST — BAY AREA APPS
+Updated November 4, 2026
+
+Product name:
+Owner:
+Exact advertised URL (no private tokens):
+Expected destination and action:
+Target country:
+Test date:
+Phone / browser result:
+Computer / browser result:
+HTTP response and final URL:
+Correct developer, product, icon, and app ID:
+Main action result:
+Current public release status:
+Failure owner and next step:
+Next recheck date:
+
+[ ] Public listing opens without developer access
+[ ] Full campaign link and redirects tested
+[ ] Main action works on phone and computer
+[ ] Headlines, descriptions, sitelinks and call to action match destination
+[ ] Preview status is clear if download is unavailable
+[ ] Privacy and contact links work
+[ ] Saved campaign settings verified
+[ ] Review status recorded separately from serving status
+[ ] Launch and budget decision recorded separately
+
+Guide: https://bayareaapps.com/resources/app-download-checklist/
