@@ -1,0 +1,31 @@
+INQUIRY FORM TEST SHEET — Bay Area Apps
+Companion guide: https://bayareaapps.com/resources/inquiry-receipt/
+Use a development environment and synthetic data. Never record private tokens here.
+
+Environment / build:
+Date:
+Browser and device:
+Tester:
+
+Repeat for each scenario:
+Scenario:
+Expected result:
+Actual result:
+Number of requests / saved records:
+Public screenshot or log reference (no tokens):
+Pass / fail / not tested:
+Follow-up owner and next step:
+
+Scenarios:
+1. Missing required field
+2. Successful save and matching private receipt
+3. Double click while request is in progress
+4. Lost response after save, then unchanged retry
+5. Existing request with no recoverable private link
+6. Unexpected receipt destination or missing reference
+7. Clipboard denied; manual saving still possible
+8. Two synthetic projects: each token accesses only its own record
+9. Reload after uncertain receipt; support instructions remain clear
+10. Narrow screen, keyboard navigation, and readable error messages
+
+Do not mark a scenario passed just because a button was clicked.
